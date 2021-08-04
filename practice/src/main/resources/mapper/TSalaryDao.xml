@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hodo.practice.dao.TSalaryDao">
+
+    <resultMap type="com.hodo.practice.entity.TSalary" id="TSalaryMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userid" column="userid" jdbcType="INTEGER"/>
+        <result property="name" column="Name" jdbcType="VARCHAR"/>
+        <result property="bascimoney" column="BasciMoney" jdbcType="INTEGER"/>
+        <result property="lateMoney" column="Late_Money" jdbcType="INTEGER"/>
+        <result property="absenteeismMoney" column="Absenteeism_Money" jdbcType="INTEGER"/>
+        <result property="earlyLeave" column="Early_Leave" jdbcType="INTEGER"/>
+        <result property="month" column="Month" jdbcType="INTEGER"/>
+        <result property="bonus" column="Bonus" jdbcType="INTEGER"/>
+        <result property="post" column="post" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TSalaryMap">
+        select id,
+               userid,
+               Name,
+               BasciMoney,
+               Late_Money,
+               Absenteeism_Money,
+               Early_Leave, Month, Bonus, post
+        from practice2.t_salary
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TSalaryMap">
+        select id,
+               userid,
+               Name,
+               BasciMoney,
+               Late_Money,
+               Absenteeism_Money,
+               Early_Leave, Month, Bonus, post
+        from practice2.t_salary
+            limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TSalaryMap">
+        select
+        id, userid, Name, BasciMoney, Late_Money, Absenteeism_Money, Early_Leave, Month, Bonus, post
+        from practice2.t_salary
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userid != null">
+                and userid = #{userid}
+            </if>
+            <if test="name != null and name != ''">
+                and Name = #{name}
+            </if>
+            <if test="bascimoney != null">
+                and BasciMoney = #{bascimoney}
+            </if>
+            <if test="lateMoney != null">
+                and Late_Money = #{lateMoney}
+            </if>
+            <if test="absenteeismMoney != null">
+                and Absenteeism_Money = #{absenteeismMoney}
+            </if>
+            <if test="earlyLeave != null">
+                and Early_Leave = #{earlyLeave}
+            </if>
+            <if test="month != null">
+                and Month = #{month}
+            </if>
+            <if test="bonus != null">
+                and Bonus = #{bonus}
+            </if>
+            <if test="post != null and post != ''">
+                and post = #{post}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into practice2.t_salary(userid, Name, BasciMoney, Late_Money, Absenteeism_Money, Early_Leave, Month,
+                                       Bonus, post)
+        values (#{userid}, #{name}, #{bascimoney}, #{lateMoney}, #{absenteeismMoney}, #{earlyLeave}, #{month}, #{bonus},
+                #{post})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into practice2.t_salary(userid, Name, BasciMoney, Late_Money, Absenteeism_Money, Early_Leave, Month,
+        Bonus, post)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userid}, #{entity.name}, #{entity.bascimoney}, #{entity.lateMoney}, #{entity.absenteeismMoney},
+            #{entity.earlyLeave}, #{entity.month}, #{entity.bonus}, #{entity.post})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into practice2.t_salary(userid, Name, BasciMoney, Late_Money, Absenteeism_Money, Early_Leave, Month,
+        Bonus, post)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userid}, #{entity.name}, #{entity.bascimoney}, #{entity.lateMoney}, #{entity.absenteeismMoney},
+            #{entity.earlyLeave}, #{entity.month}, #{entity.bonus}, #{entity.post})
+        </foreach>
+        on duplicate key update
+        userid = values(userid) , Name = values(Name) , BasciMoney = values(BasciMoney) , Late_Money =
+        values(Late_Money) , Absenteeism_Money = values(Absenteeism_Money) , Early_Leave = values(Early_Leave) , Month =
+        values(Month) , Bonus = values(Bonus) , post = values(post)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update practice2.t_salary
+        <set>
+            <if test="userid != null">
+                userid = #{userid},
+            </if>
+            <if test="name != null and name != ''">
+                Name = #{name},
+            </if>
+            <if test="bascimoney != null">
+                BasciMoney = #{bascimoney},
+            </if>
+            <if test="lateMoney != null">
+                Late_Money = #{lateMoney},
+            </if>
+            <if test="absenteeismMoney != null">
+                Absenteeism_Money = #{absenteeismMoney},
+            </if>
+            <if test="earlyLeave != null">
+                Early_Leave = #{earlyLeave},
+            </if>
+            <if test="month != null">
+                Month = #{month},
+            </if>
+            <if test="bonus != null">
+                Bonus = #{bonus},
+            </if>
+            <if test="post != null and post != ''">
+                post = #{post},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from practice2.t_salary
+        where id = #{id}
+    </delete>
+
+</mapper>
+

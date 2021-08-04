@@ -17,7 +17,7 @@
  *
  */
 
-package com.hodo.practice.common;
+package com.hodo.practice.entity;
 
 import java.io.Serializable;
 import java.util.HashMap;

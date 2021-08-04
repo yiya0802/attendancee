@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hodo.practice.dao.TAttendanceDao">
+
+    <resultMap type="com.hodo.practice.entity.TAttendance" id="TAttendanceMap">
+        <result property="attennum" column="AttenNum" jdbcType="INTEGER"/>
+        <result property="state" column="State" jdbcType="INTEGER"/>
+        <result property="name" column="Name" jdbcType="VARCHAR"/>
+        <result property="departmentid" column="departmentId" jdbcType="VARCHAR"/>
+        <result property="attendancetype" column="attendanceType" jdbcType="INTEGER"/>
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="attendanceTime" column="attendance_time" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TAttendanceMap">
+        select AttenNum,
+               State,
+               Name,
+               departmentId,
+               attendanceType,
+               id,
+               attendance_time
+        from practice2.t_attendance
+        where AttenNum = #{attennum}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TAttendanceMap">
+        select AttenNum,
+               State,
+               Name,
+               departmentId,
+               attendanceType,
+               id,
+               attendance_time
+        from practice2.t_attendance limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TAttendanceMap">
+        select
+        AttenNum, State, Name, departmentId, attendanceType, id, attendance_time
+        from practice2.t_attendance
+        <where>
+            <if test="attennum != null">
+                and AttenNum = #{attennum}
+            </if>
+            <if test="state != null">
+                and State = #{state}
+            </if>
+            <if test="name != null and name != ''">
+                and Name = #{name}
+            </if>
+            <if test="departmentid != null and departmentid != ''">
+                and departmentId = #{departmentid}
+            </if>
+            <if test="attendancetype != null">
+                and attendanceType = #{attendancetype}
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="attendanceTime != null and attendanceTime != ''">
+                and attendance_time = #{attendanceTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="attennum" useGeneratedKeys="true">
+        insert into practice2.t_attendance(State, Name, departmentId, attendanceType, id, attendance_time)
+        values (#{state}, #{name}, #{departmentid}, #{attendancetype}, #{id}, #{attendanceTime})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="attennum" useGeneratedKeys="true">
+        insert into practice2.t_attendance(State, Name, departmentId, attendanceType, id, attendance_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.state}, #{entity.name}, #{entity.departmentid}, #{entity.attendancetype}, #{entity.id},
+            #{entity.attendanceTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="attennum" useGeneratedKeys="true">
+        insert into practice2.t_attendance(State, Name, departmentId, attendanceType, id, attendance_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.state}, #{entity.name}, #{entity.departmentid}, #{entity.attendancetype}, #{entity.id},
+            #{entity.attendanceTime})
+        </foreach>
+        on duplicate key update
+        State = values(State) , Name = values(Name) , departmentId = values(departmentId) , attendanceType =
+        values(attendanceType) , id = values(id) , attendance_time = values(attendance_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update practice2.t_attendance
+        <set>
+            <if test="state != null">
+                State = #{state},
+            </if>
+            <if test="name != null and name != ''">
+                Name = #{name},
+            </if>
+            <if test="departmentid != null and departmentid != ''">
+                departmentId = #{departmentid},
+            </if>
+            <if test="attendancetype != null">
+                attendanceType = #{attendancetype},
+            </if>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="attendanceTime != null and attendanceTime != ''">
+                attendance_time = #{attendanceTime},
+            </if>
+        </set>
+        where AttenNum = #{attennum}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from practice2.t_attendance
+        where AttenNum = #{attennum}
+    </delete>
+
+</mapper>
+
