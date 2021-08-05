@@ -1,17 +1,17 @@
-package com.hodo.practice.dao;
+package com.hodo.practice.entity.dao;
 
-import com.hodo.practice.entity.TLeave;
+import com.hodo.practice.entity.po.TSalary;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 /**
- * 请假表(TLeave)表数据库访问层
+ * 员工薪资(TSalary)表数据库访问层
  *
  * @author makejava
  * @since 2021-08-03 16:46:39
  */
-public interface TLeaveDao {
+public interface TSalaryDao {
 
     /**
      * 通过ID查询单条数据
@@ -19,7 +19,7 @@ public interface TLeaveDao {
      * @param id 主键
      * @return 实例对象
      */
-    TLeave queryById(Integer id);
+    TSalary queryById(Integer id);
 
     /**
      * 查询指定行数据
@@ -28,48 +28,48 @@ public interface TLeaveDao {
      * @param limit  查询条数
      * @return 对象列表
      */
-    List<TLeave> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<TSalary> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
 
     /**
      * 通过实体作为筛选条件查询
      *
-     * @param tLeave 实例对象
+     * @param tSalary 实例对象
      * @return 对象列表
      */
-    List<TLeave> queryAll(TLeave tLeave);
+    List<TSalary> queryAll(TSalary tSalary);
 
     /**
      * 新增数据
      *
-     * @param tLeave 实例对象
+     * @param tSalary 实例对象
      * @return 影响行数
      */
-    int insert(TLeave tLeave);
+    int insert(TSalary tSalary);
 
     /**
      * 批量新增数据（MyBatis原生foreach方法）
      *
-     * @param entities List<TLeave> 实例对象列表
+     * @param entities List<TSalary> 实例对象列表
      * @return 影响行数
      */
-    int insertBatch(@Param("entities") List<TLeave> entities);
+    int insertBatch(@Param("entities") List<TSalary> entities);
 
     /**
      * 批量新增或按主键更新数据（MyBatis原生foreach方法）
      *
-     * @param entities List<TLeave> 实例对象列表
+     * @param entities List<TSalary> 实例对象列表
      * @return 影响行数
      */
-    int insertOrUpdateBatch(@Param("entities") List<TLeave> entities);
+    int insertOrUpdateBatch(@Param("entities") List<TSalary> entities);
 
     /**
      * 修改数据
      *
-     * @param tLeave 实例对象
+     * @param tSalary 实例对象
      * @return 影响行数
      */
-    int update(TLeave tLeave);
+    int update(TSalary tSalary);
 
     /**
      * 通过主键删除数据

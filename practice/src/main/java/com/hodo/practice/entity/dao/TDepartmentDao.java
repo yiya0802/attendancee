@@ -1,6 +1,6 @@
-package com.hodo.practice.dao;
+package com.hodo.practice.entity.dao;
 
-import com.hodo.practice.entity.TDepartment;
+import com.hodo.practice.entity.po.TDepartment;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

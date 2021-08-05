@@ -1,4 +1,4 @@
-package com.hodo.practice.vo;
+package com.hodo.practice.entity.vo;
 
 import lombok.Data;
 

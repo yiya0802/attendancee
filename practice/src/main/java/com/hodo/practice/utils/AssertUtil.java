@@ -1,6 +1,6 @@
 package com.hodo.practice.utils;
 
-import com.hodo.practice.exception.ParamException;
+import com.hodo.practice.entity.R;
 
 /**
  * @anthor :zyy
@@ -10,12 +10,13 @@ import com.hodo.practice.exception.ParamException;
  */
 
 public class AssertUtil {
-    public  static  void isTrue(Boolean flag,String msg)
+    public  static R<Object> isTrue(Boolean flag, String msg)
     {
-        if(flag)
+        if(!flag)
         {
-            throw new ParamException(msg);
+            return R.failed(msg);
         }
+        return R.ok(msg);
     }
 
 }

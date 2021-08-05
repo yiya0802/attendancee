@@ -1,4 +1,7 @@
-package com.hodo.practice.entity;
+package com.hodo.practice.entity.po;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -8,6 +11,8 @@ import java.io.Serializable;
  * @author makejava
  * @since 2021-08-03 16:46:37
  */
+@AllArgsConstructor
+@NoArgsConstructor
 public class TAttendance implements Serializable {
     private static final long serialVersionUID = -22793331338775663L;
     /**

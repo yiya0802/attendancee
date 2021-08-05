@@ -1,4 +1,9 @@
-package com.hodo.practice.entity;
+package com.hodo.practice.entity.po;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 import java.io.Serializable;
@@ -9,6 +14,10 @@ import java.io.Serializable;
  * @author makejava
  * @since 2021-08-03 16:46:38
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
 public class TLeave implements Serializable {
     private static final long serialVersionUID = -43356433397152031L;
     /**

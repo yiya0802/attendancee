@@ -1,11 +1,7 @@
-package com.hodo.practice.dao;
+package com.hodo.practice.entity.dao;
 
-import com.hodo.practice.entity.Staff;
-import com.hodo.practice.vo.RestBean;
+import com.hodo.practice.entity.po.Staff;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

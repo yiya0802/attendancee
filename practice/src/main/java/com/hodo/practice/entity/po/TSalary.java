@@ -1,4 +1,4 @@
-package com.hodo.practice.entity;
+package com.hodo.practice.entity.po;
 
 import java.io.Serializable;
 

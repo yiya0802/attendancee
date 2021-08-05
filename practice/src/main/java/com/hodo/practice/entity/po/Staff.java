@@ -1,11 +1,8 @@
-package com.hodo.practice.entity;
-
-import com.baomidou.mybatisplus.annotation.TableId;
-import org.apache.commons.lang3.RandomUtils;
+package com.hodo.practice.entity.po;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Random;
+
 
 /**
  * (Staff)实体类
