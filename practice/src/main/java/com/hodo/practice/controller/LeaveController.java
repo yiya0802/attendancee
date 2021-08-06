@@ -1,5 +1,8 @@
 package com.hodo.practice.controller;
 
+import com.hodo.practice.constant.CommonConstants;
+import com.hodo.practice.entity.R;
+import com.hodo.practice.entity.po.Staff;
 import com.hodo.practice.entity.po.TLeave;
 import com.hodo.practice.service.LeaveService;
 import com.hodo.practice.service.StaffService;
@@ -48,8 +51,9 @@ public class LeaveController
      */
     
     @RequestMapping("guanli")
-    private String guanli()
+    private String guanli(String name)
     {
+        leaveService.getMyService(name);
         return "guanli";
     }
     

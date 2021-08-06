@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @anthor :zyy
- * @description:
+ * @description: 查看自己的薪资
  * @param:
  * @return :
  */
@@ -33,7 +33,8 @@ public class SalaryController
             return R.failed(CommonConstants.NAMENOTEXITS);
         }
         salaryService.findSalaryByName(name);
+
         
-        return R.ok(salaryService);
+        return R.ok(salaryService,CommonConstants.FINDSALARYSUCCESS);
     }
 }

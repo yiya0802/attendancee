@@ -21,7 +21,6 @@ import java.util.List;
  * @return :
  */
 @Controller
-@RequestMapping("/login")
 @AllArgsConstructor
 @Getter
 @Setter
@@ -34,7 +33,7 @@ public class AttendanceController
     @RequestMapping("/daka")
     public String daka(String name, Integer type)
     {
-        Staff staff = staffService.findByUserName(name);
+        Staff staff = (Staff) staffService.findByUserName(name);
         
         TAttendance tAttendance = new TAttendance(null, null, name, (String)attendanceService.getDepartIdByName(name),
             type, staff.getJobId(), attendanceService.getTime());

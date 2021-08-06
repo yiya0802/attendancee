@@ -25,4 +25,12 @@ public interface CommonConstants
     String LEAVESUCCESS = "请假或离职成功";
     
     String NAMENOTEXITS = "名字不存在";
+    
+    String FINDSALARYSUCCESS = "查找工资成功!";
+    
+    String NOUSER = "暂无员工";
+
+    String ADDSUCCESS = "用户添加成功";
+
+    Object DELETESUCCESS = "用户记录删除成功";
 }

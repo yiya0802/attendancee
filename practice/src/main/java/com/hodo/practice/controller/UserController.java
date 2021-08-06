@@ -7,9 +7,9 @@ import com.hodo.practice.service.StaffService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
@@ -28,19 +28,24 @@ public class UserController
     
     @RequestMapping("/toLogin")
 
-    public R login(String username, String password)
+    public String login(@Param("username") String username, @Param("password") String password)
     {
         try
         {
             Staff staff = staffService.login(username, password);
-            return R.ok(staff, CommonConstants.LOGIN_SUCCESS);
+             R.ok(staff, CommonConstants.LOGIN_SUCCESS);
+            return "index";
+
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            return R.failed(CommonConstants.LOGIN_ERROR);
+             R.failed(CommonConstants.LOGIN_ERROR);
+             return "login";
         }
     }
+
+
 
 
 
