@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * @anthor :zyy
  * @description: 登陆界面 信息展示
- * @param:
- * @return :
+ * @param: :username password
+ * @return :R
  */
 @Controller
 @AllArgsConstructor
@@ -28,20 +28,20 @@ public class UserController
     
     @RequestMapping("/toLogin")
 
-    public String login(@Param("username") String username, @Param("password") String password)
+    public R<Staff> login(@Param("username") String username, @Param("password") String password)
     {
         try
         {
             Staff staff = staffService.login(username, password);
-             R.ok(staff, CommonConstants.LOGIN_SUCCESS);
-            return "index";
+             return R.ok(staff, CommonConstants.LOGIN_SUCCESS);
+
 
         }
         catch (Exception e)
         {
             e.printStackTrace();
-             R.failed(CommonConstants.LOGIN_ERROR);
-             return "login";
+             return R.failed(CommonConstants.LOGIN_ERROR);
+
         }
     }
 

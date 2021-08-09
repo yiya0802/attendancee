@@ -8,13 +8,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @anthor :zyy
  * @description: 查看自己的薪资
- * @param:
- * @return :
+ * @param: :name id
+ * @return :R
  */
 @Controller
 @RequestMapping("/salary")
@@ -25,16 +26,32 @@ public class SalaryController
 {
     private SalaryService salaryService;
     
-    @RequestMapping("MySalary")
-    private R MySalary(Integer id, String name)
+    @RequestMapping("mySalary")
+    private R MySalaryByName(String name)
     {
         if (StringUtils.isEmpity(name))
         {
             return R.failed(CommonConstants.NAMENOTEXITS);
         }
-        salaryService.findSalaryByName(name);
+        if (null==salaryService.findSalaryByName(name))
+        {
+            return R.failed(CommonConstants.NOSALARYRECORDS);
+        }
+        return R.ok(salaryService.findSalaryByName(name),CommonConstants.FINDSALARYSUCCESS);
+    }
+    @PostMapping("")
+    private R MySalaryById(Integer id)
+    {
+        if (null==id)
+        {
+            return R.failed();
+        }
+        if (null==salaryService.findSalaryById(id))
+        {
+            return R.failed(CommonConstants.NOSALARYRECORDS);
 
-        
-        return R.ok(salaryService,CommonConstants.FINDSALARYSUCCESS);
+        }
+        return R.ok(salaryService.findSalaryById(id),CommonConstants.FINDSALARYSUCCESS);
+
     }
 }

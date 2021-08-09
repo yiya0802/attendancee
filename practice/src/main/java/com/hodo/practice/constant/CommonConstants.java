@@ -1,5 +1,7 @@
 package com.hodo.practice.constant;
 
+import java.util.List;
+
 /**
  * @program: practiceproject
  * @Date: 2021/8/2 9:54
@@ -29,8 +31,21 @@ public interface CommonConstants
     String FINDSALARYSUCCESS = "查找工资成功!";
     
     String NOUSER = "暂无员工";
-
+    
     String ADDSUCCESS = "用户添加成功";
-
-    Object DELETESUCCESS = "用户记录删除成功";
+    
+    String DELETESUCCESS = "用户记录删除成功";
+    
+    String DAKASUCCESS = "打卡成功 ";
+    
+    String LIZHI = "离职 ";
+    
+    String DIAOXIU = "调休";
+    
+    String NOCHECK = "没有审核记录";
+    
+    String NOSALARYRECORDS = "没有工资记录";
+    
+    String INSERTERROR = "插入失败";
+    String NODAKARECORDS = "暂无打卡记录";
 }

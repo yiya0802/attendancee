@@ -1,6 +1,7 @@
 package com.hodo.practice.service;
 
 import com.hodo.practice.entity.R;
+import com.hodo.practice.entity.dto.UpdateStaff;
 import com.hodo.practice.entity.po.Staff;
 import org.springframework.stereotype.Service;
 
@@ -35,11 +36,11 @@ public interface StaffService {
     /**
      * 用户更新操作
      *
-     * @param staff
+     * @param updateStaff
      * @return
      */
 
-    R updateUserInfo(Staff staff);
+    Integer updateUserInfo(UpdateStaff updateStaff);
 
     /**
      * 查找所有员工
@@ -68,7 +69,7 @@ public interface StaffService {
      * @param ids
      */
 
-    void deleteStaff(Integer[] ids);
+    int deleteStaff(Integer[] ids);
 
     /**
      * 通过id找用户

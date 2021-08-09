@@ -2,7 +2,8 @@ package com.hodo.practice.controller;
 
 import com.hodo.practice.constant.CommonConstants;
 import com.hodo.practice.entity.R;
-import com.hodo.practice.entity.po.Staff;
+import com.hodo.practice.entity.dto.Circuit;
+import com.hodo.practice.entity.dto.check;
 import com.hodo.practice.entity.po.TLeave;
 import com.hodo.practice.service.LeaveService;
 import com.hodo.practice.service.StaffService;
@@ -10,15 +11,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @anthor :zyy
  * @description: 事务表，请假，离开，离职
- * @param:
- * @return :
+ * @param:  Circuit
+ * @return :R
  */
 @Controller
 @RequestMapping("/Leave")
@@ -30,42 +33,51 @@ public class LeaveController
     private LeaveService leaveService;
     
     private StaffService staffService;
+
     
-    @RequestMapping("liucheng")
-    private String liucheng(String name, Integer type, String reason, Integer days, Date LeaveTime, Date BackTime)
+    @RequestMapping("circuit")
+    private R circuit(Circuit c)
     {
-        
-        TLeave leave =
-            new TLeave(null, type, leaveService.getIdByName(name), name, reason, LeaveTime, BackTime, days, null);
-        
-        leaveService.process(leave);
-        
-        return "liucheng";
+        if (leaveService.addLeaveProcess(c)==0)
+        {
+            return R.failed(CommonConstants.INSERTERROR);
+        }
+        return R.ok(leaveService.addLeaveProcess(c));
         
     }
     
     /**
      * 查看自己的事务信息
-     * 
-     * @return
+     * @param:  name
+     * @return  R
      */
     
     @RequestMapping("guanli")
-    private String guanli(String name)
+    private R<? extends Object> guanli(String name)
     {
         leaveService.getMyService(name);
-        return "guanli";
+        if (CollectionUtils.isEmpty(leaveService.getMyService(name)))
+        {
+            return R.failed(CommonConstants.NOUSER);
+        }
+
+        return R.ok(leaveService.getMyService(name));
     }
     
     /**
-     * 审核流程
+     * 审核流程 审核（是否通过、意见）
+     * @param:  check
      *
-     * @return
+     * @return  R<List<String>>
      */
     @RequestMapping("shenhe")
-    private String shenhe()
+    private R<List<String>> shenhe(check check)
     {
-        return "shenhe";
-        
+        List<String>list =leaveService.checkProcess(check);
+        if (CollectionUtils.isEmpty(list))
+        {
+            return R.failed(CommonConstants.NOCHECK);
+        }
+        return R.ok(list);
     }
 }

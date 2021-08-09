@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -20,10 +21,19 @@ import java.util.List;
  * @param:
  * @return :
  */
+
 @Controller
 @AllArgsConstructor
 @Getter
 @Setter
+/**
+ *
+ * @description: 打卡
+ * @param: String name, Integer type
+ * @return: R
+ * @date: 2021/8/9
+ */
+
 public class AttendanceController
 {
     private AttendanceService attendanceService;
@@ -31,16 +41,17 @@ public class AttendanceController
     private StaffService staffService;
     
     @RequestMapping("/daka")
-    public String daka(String name, Integer type)
+    
+    public R<Integer> daka(String name, Integer type)
     {
-        Staff staff = (Staff) staffService.findByUserName(name);
-        
+        Staff staff = (Staff)staffService.findByUserName(name);
         TAttendance tAttendance = new TAttendance(null, null, name, (String)attendanceService.getDepartIdByName(name),
             type, staff.getJobId(), attendanceService.getTime());
-        
-        attendanceService.daka(tAttendance);
-        
-        return "daka";
+        if (0 == attendanceService.daka(tAttendance))
+        {
+            return R.failed(CommonConstants.NODAKARECORDS);
+        }
+        return R.ok(attendanceService.daka(tAttendance), CommonConstants.DAKASUCCESS);
         
     }
     
@@ -51,14 +62,31 @@ public class AttendanceController
      * @return 如果没有记录，返回打卡界面，如果有记录，显示记录
      */
     @RequestMapping("/fidnDakaRecord")
-    public String findDakaRecord(String name)
+    public R<Object> findDakaRecord(String name)
     {
         List<TAttendance> records = attendanceService.findRecords(name);
         if (records.isEmpty())
         {
-            return "daka";
+            return R.failed();
         }
-        return "record";
+        return R.ok(records);
+    }
+    /**
+     *
+     * @description: 寻找打卡记录 通过id
+     * @param: id
+     * @return:  R
+     * @date: 2021/8/9
+     */
+    @PostMapping("/findRecords")
+    public R findDakaRecordByID(Integer id)
+    {
+        List<TAttendance> records = attendanceService.findRecordsByID(id);
+        if (records.isEmpty())
+        {
+            return R.failed(CommonConstants.FINDDAKARECORD);
+        }
+        return R.ok(records);
     }
     
 }

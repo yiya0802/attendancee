@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hodo.practice.constant.CommonConstants;
 import com.hodo.practice.entity.R;
+import com.hodo.practice.entity.dto.UpdateStaff;
 import com.hodo.practice.entity.po.Staff;
 import com.hodo.practice.service.StaffService;
 import com.hodo.practice.utils.AssertUtil;
@@ -22,14 +23,20 @@ import java.util.Map;
 /**
  * @anthor :zyy
  * @description: 用户service实现层
- * @param:
- * @return :
  */
 @Service
 
 public class StaffServiceImpl extends ServiceImpl implements StaffService
 {
     @Override
+    /**
+     *
+     * @description: 用户登录
+     * @param: [username, password]
+     * @return: com.hodo.practice.entity.po.Staff
+     * @date: 2021/8/9
+     */
+
     public Staff login(String username, String password)
     {
         
@@ -47,6 +54,14 @@ public class StaffServiceImpl extends ServiceImpl implements StaffService
     }
     
     @Override
+    /**
+     *
+     * @description: 通过name查找list
+     * @param: [username]
+     * @return: java.util.List<com.hodo.practice.entity.po.Staff>
+     * @date: 2021/8/9
+     */
+
     public List<Staff> findByUserName(String username)
     {
         Staff staff = new Staff();
@@ -55,35 +70,40 @@ public class StaffServiceImpl extends ServiceImpl implements StaffService
         queryWrapper.eq("name", username);
         return baseMapper.selectList(queryWrapper);
     }
-    
-    /**
-     * 更新 用户名更新唯一 非空
-     * 
-     * @param staff
-     */
+
     @Override
-    public R updateUserInfo(Staff staff)
+    /**
+     *
+     * @description: 更新用户信息
+     * @param: [updateStaff]
+     * @return: java.lang.Integer
+     * @date: 2021/8/9
+     */
+
+    public Integer updateUserInfo(UpdateStaff updateStaff)
     {
         // 判断非空
-        if (StringUtils.isEmpity(staff.getName()))
-        {
-            return R.failed(CommonConstants.UPDATEERROR);
-        }
-        Staff temp = (Staff)this.findByUserName(staff.getName());
-        // 判断唯一性
-        if (temp != null)
-        {
-            return R.failed(CommonConstants.UPDATEEXITS);
-        }
-        if (!this.updateById(staff))
-        {
-            return R.failed(CommonConstants.UPDATEFAILURE);
-        }
-        return R.ok(staff, CommonConstants.UPDATESUCCESS);
+       if (null==updateStaff)
+       {
+
+       }
+       QueryWrapper<Staff>queryWrapper=new QueryWrapper<>();
+       queryWrapper.eq("name",updateStaff.getName()).eq("address",updateStaff.getAddress())
+               .eq("mobile",updateStaff.getMobile()).eq("password",updateStaff.getPassword());
+
+       return baseMapper.update(updateStaff,queryWrapper);
         
     }
     
     @Override
+    /**
+     *
+     * @description: 找到所有员工信息
+     * @param: []
+     * @return: java.util.List<com.hodo.practice.entity.po.Staff>
+     * @date: 2021/8/9
+     */
+
     public List<Staff> findAllStaff()
     {
         return baseMapper.selectList(null);
@@ -131,7 +151,7 @@ public class StaffServiceImpl extends ServiceImpl implements StaffService
      */
     
     @Override
-    public void deleteStaff(Integer[] ids)
+    public int deleteStaff(Integer[] ids)
     {
         Assert.isTrue(ids == null || ids.length == 0, "请选择你要选择的用户id", null);
         List<Staff> list = new ArrayList<Staff>();
@@ -140,11 +160,19 @@ public class StaffServiceImpl extends ServiceImpl implements StaffService
             Staff staff = this.findById(id);
             list.add(staff);
         }
-        baseMapper.deleteBatchIds(list);
+       return baseMapper.deleteBatchIds(list);
     }
     
     
     @Override
+    /**
+     *
+     * @description: 通过id查找staff
+     * @param: [id]
+     * @return: com.hodo.practice.entity.po.Staff
+     * @date: 2021/8/9
+     */
+
     public Staff findById(Integer id)
     {
         return (Staff)this.baseMapper.selectById(id);

@@ -19,7 +19,7 @@ import java.util.TimeZone;
  * @anthor :zyy
  * @description: 打卡的实现类
  * @param:
- * @return :
+ * @return:
  */
 @Service
 public class AttendanceServiceImpl extends ServiceImpl implements AttendanceService
@@ -27,7 +27,7 @@ public class AttendanceServiceImpl extends ServiceImpl implements AttendanceServ
     /**
      * 获取打卡的时间
      * 
-     * @return
+     * @return date
      */
     @Override
     public String getTime()
@@ -43,7 +43,7 @@ public class AttendanceServiceImpl extends ServiceImpl implements AttendanceServ
      * 通过名字查询departid
      * 
      * @param name
-     * @return
+     * @return jobid
      */
     @Override
     public Integer getDepartIdByName(String name)
@@ -61,7 +61,7 @@ public class AttendanceServiceImpl extends ServiceImpl implements AttendanceServ
      * 打卡
      * 
      * @param tAttendance
-     * @return
+     * @return int
      */
     @Override
     public int daka(TAttendance tAttendance)
@@ -73,7 +73,7 @@ public class AttendanceServiceImpl extends ServiceImpl implements AttendanceServ
      * 通过名字找到打卡记录
      * 
      * @param name
-     * @return
+     * @return list
      */
     @Override
     public List<TAttendance> findRecords(String name)
@@ -84,5 +84,16 @@ public class AttendanceServiceImpl extends ServiceImpl implements AttendanceServ
         return this.baseMapper.selectList(wrapper);
         
     }
-    
+
+    /**
+     * 通过id找到打卡记录
+     * @param id
+     * @return list
+     */
+
+    @Override
+    public List<TAttendance> findRecordsByID(Integer id) {
+        return this.baseMapper.selectList(new QueryWrapper<TAttendance>().eq("num",id));
+    }
+
 }
