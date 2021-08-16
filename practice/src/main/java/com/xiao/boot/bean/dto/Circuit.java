@@ -1,10 +1,10 @@
-package com.hodo.practice.entity.dto;
+package com.xiao.boot.bean.dto;
+
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 /**
  * @anthor :zyy
@@ -17,9 +17,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class Circuit {
     private  String name ;
-    private  Integer type;
+    private  Integer leavetype;
     String reason;
     Integer days;
     Date LeaveTime;
     Date BackTime;
+    Double ammount;
 }

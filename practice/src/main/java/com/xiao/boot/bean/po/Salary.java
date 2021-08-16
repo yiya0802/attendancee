@@ -1,6 +1,13 @@
-package com.hodo.practice.entity.po;
+package com.xiao.boot.bean.po;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 员工薪资(TSalary)实体类
@@ -8,8 +15,12 @@ import java.io.Serializable;
  * @author makejava
  * @since 2021-08-03 16:46:39
  */
-public class TSalary implements Serializable {
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class Salary implements Serializable {
     private static final long serialVersionUID = -52673016308287489L;
+    @TableId(value = "id",type= IdType.AUTO)
 
     private Integer id;
 

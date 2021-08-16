@@ -17,7 +17,7 @@
  *
  */
 
-package com.hodo.practice.entity;
+package com.xiao.boot.bean.po;
 
 import java.io.Serializable;
 import java.util.HashMap;

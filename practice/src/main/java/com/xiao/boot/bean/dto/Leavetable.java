@@ -1,40 +1,28 @@
-package com.hodo.practice.entity.po;
+package com.xiao.boot.bean.dto;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.Date;
-import java.io.Serializable;
 
 /**
- * 请假表(TLeave)实体类
+ * 请假表(Leavetable)表实体类
  *
  * @author makejava
- * @since 2021-08-03 16:46:38
+ * @since 2021-08-16 09:06:54
  */
+@SuppressWarnings("serial")
 @AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
-public class TLeave implements Serializable {
-    private static final long serialVersionUID = -43356433397152031L;
-    /**
-     * 请假号
-     */
+public class Leavetable extends Model<Leavetable> {
+    //请假号
     private Integer id;
-    /**
-     * 请假类型
-     */
+    //请假类型
     private Integer leavetype;
-    /**
-     * 用户id
-     */
+    //用户id
     private Integer num;
-    /**
-     * 请假姓名
-     */
+    //请假姓名
     private String name;
 
     private String reason;
@@ -44,9 +32,7 @@ public class TLeave implements Serializable {
     private Date backtime;
 
     private Integer days;
-    /**
-     * 金额（报销）
-     */
+    //金额（报销）
     private Double ammount;
 
 
@@ -122,4 +108,13 @@ public class TLeave implements Serializable {
         this.ammount = ammount;
     }
 
+    /**
+     * 获取主键值
+     *
+     * @return 主键值
+     */
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
 }
