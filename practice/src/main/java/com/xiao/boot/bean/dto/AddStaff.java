@@ -20,4 +20,5 @@ public class AddStaff {
     private Integer role;
     private String password;
     private String departmentId;
+    private Integer status=1;
 }

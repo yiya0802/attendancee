@@ -5,7 +5,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -100,7 +102,7 @@ public class StaffController {
     }
 
     // 添加员工
-    @PostMapping("/add_staff")
+    @GetMapping("/add_staff")
     @ResponseBody
     /**
      *
@@ -111,7 +113,14 @@ public class StaffController {
      */
 
     public R<Integer> addStaff(AddStaff staff) {
-        Integer row = staffService.addStaff(staff);
+        Staff staff1=staffService.findStaffById(staff.getJobId());
+        if (staff1!=null)
+        {
+            return R.failed("添加失败，不能重复id");
+        }
+        Staff staff2=new Staff();
+        BeanUtils.copyProperties(staff,staff2);
+        Integer row = staffService.addStaff(staff2);
         if (row == 0) {
             return R.failed();
         }

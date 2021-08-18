@@ -1,7 +1,6 @@
 package com.xiao.boot.service.impl;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.xiao.boot.bean.dto.AddStaff;
 import com.xiao.boot.bean.po.Staff;
 import com.xiao.boot.mapper.StaffMapper;
 import com.xiao.boot.service.StaffService;
@@ -56,7 +54,7 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public Integer addStaff(AddStaff staff) {
+    public Integer addStaff(Staff staff) {
         return staffMapper.insert(staff);
     }
 
