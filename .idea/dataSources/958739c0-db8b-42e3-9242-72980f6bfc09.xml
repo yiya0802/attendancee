@@ -810,242 +810,296 @@ SELECT|sys.sys_config
       <ObjectGrants>ALL PRIVILEGES!
 </ObjectGrants>
     </user>
-    <table id="252" parent="23" name="staff"/>
-    <table id="253" parent="23" name="t_attendance">
+    <table id="252" parent="23" name="attendance">
       <Comment>缺勤表</Comment>
     </table>
-    <table id="254" parent="23" name="t_department">
+    <table id="253" parent="23" name="checktable">
+      <Comment>审核表</Comment>
+    </table>
+    <table id="254" parent="23" name="department">
       <Comment>部门岗位表</Comment>
     </table>
-    <table id="255" parent="23" name="t_leave">
+    <table id="255" parent="23" name="leavetable">
       <Comment>请假表</Comment>
     </table>
-    <table id="256" parent="23" name="t_salary">
+    <table id="256" parent="23" name="salary">
       <Comment>员工薪资</Comment>
     </table>
-    <column id="257" parent="252" name="job_id">
-      <Position>1</Position>
-      <DataType>int(20)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="258" parent="252" name="name">
-      <Position>2</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="259" parent="252" name="birthday">
-      <Position>3</Position>
-      <DataType>varchar(45)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="260" parent="252" name="sex">
-      <Position>4</Position>
-      <DataType>varchar(5)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="261" parent="252" name="mobile">
-      <Position>5</Position>
-      <DataType>varchar(50)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="262" parent="252" name="post">
-      <Position>6</Position>
-      <Comment>岗位</Comment>
-      <DataType>int(20)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="263" parent="252" name="password">
-      <Position>7</Position>
-      <DataType>varchar(15)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="264" parent="252" name="role">
-      <Position>8</Position>
-      <Comment>状态</Comment>
-      <DataType>varchar(5)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <key id="265" parent="252" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>job_id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="266" parent="253" name="AttenNum">
+    <table id="257" parent="23" name="staff"/>
+    <column id="258" parent="252" name="id">
       <Position>1</Position>
       <Comment>缺勤编号</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="267" parent="253" name="State">
+    <column id="259" parent="252" name="name">
       <Position>2</Position>
-      <Comment>正常、迟到、早退</Comment>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="268" parent="253" name="Name">
-      <Position>3</Position>
       <Comment>姓名</Comment>
       <DataType>varchar(15)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="269" parent="253" name="departmentId">
-      <Position>4</Position>
+    <column id="260" parent="252" name="department_id">
+      <Position>3</Position>
       <Comment>部门</Comment>
       <DataType>varchar(15)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="270" parent="253" name="attendanceType">
-      <Position>5</Position>
+    <column id="261" parent="252" name="attendance_type">
+      <Position>4</Position>
       <Comment>缺勤类型（离职，请假，外出）</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="271" parent="253" name="id">
-      <Position>6</Position>
+    <column id="262" parent="252" name="job_id">
+      <Position>5</Position>
       <Comment>员工id</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="272" parent="253" name="attendance_time">
-      <Position>7</Position>
+    <column id="263" parent="252" name="attendance_time">
+      <Position>6</Position>
       <Comment>打卡时间</Comment>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="273" parent="253" name="Num_idx">
-      <ColNames>AttenNum</ColNames>
+    <column id="264" parent="252" name="sex">
+      <Position>7</Position>
+      <DataType>varchar(5)|0s</DataType>
+    </column>
+    <column id="265" parent="252" name="birthday">
+      <Position>8</Position>
+      <DataType>varchar(25)|0s</DataType>
+    </column>
+    <index id="266" parent="252" name="Num_idx">
+      <ColNames>id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="274" parent="253" name="PRIMARY">
+    <key id="267" parent="252" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>AttenNum</ColNames>
+      <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="275" parent="254" name="departmentId">
+    <column id="268" parent="253" name="name">
+      <Position>1</Position>
+      <DataType>varchar(15)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="269" parent="253" name="id">
+      <Position>2</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="270" parent="253" name="type">
+      <Position>3</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="271" parent="253" name="opinion">
+      <Position>4</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="272" parent="253" name="status">
+      <Position>5</Position>
+      <DataType>varchar(10)|0s</DataType>
+    </column>
+    <key id="273" parent="253" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="274" parent="254" name="departmentId">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="276" parent="254" name="name">
+    <column id="275" parent="254" name="name">
       <Position>2</Position>
       <DataType>varchar(15)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="277" parent="254" name="PRIMARY">
+    <column id="276" parent="254" name="post">
+      <Position>3</Position>
+      <DataType>varchar(15)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="277" parent="254" name="salary">
+      <Position>4</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="278" parent="254" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>departmentId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="278" parent="255" name="id">
+    <column id="279" parent="255" name="id">
       <Position>1</Position>
       <Comment>请假号</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="279" parent="255" name="LeaveType">
+    <column id="280" parent="255" name="leavetype">
       <Position>2</Position>
       <Comment>请假类型</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="280" parent="255" name="Num">
+    <column id="281" parent="255" name="num">
       <Position>3</Position>
       <Comment>用户id</Comment>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
     </column>
-    <column id="281" parent="255" name="Name">
+    <column id="282" parent="255" name="name">
       <Position>4</Position>
       <Comment>请假姓名</Comment>
-      <DataType>varchar(10)|0s</DataType>
+      <DataType>varchar(15)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="282" parent="255" name="Reason">
+    <column id="283" parent="255" name="reason">
       <Position>5</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="283" parent="255" name="LeaveTime">
+    <column id="284" parent="255" name="leavetime">
       <Position>6</Position>
       <DataType>datetime|0s</DataType>
-      <NotNull>1</NotNull>
     </column>
-    <column id="284" parent="255" name="BackTime">
+    <column id="285" parent="255" name="backtime">
       <Position>7</Position>
       <DataType>datetime|0s</DataType>
-      <NotNull>1</NotNull>
     </column>
-    <column id="285" parent="255" name="days">
+    <column id="286" parent="255" name="days">
       <Position>8</Position>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
     </column>
-    <column id="286" parent="255" name="ammount">
+    <column id="287" parent="255" name="ammount">
       <Position>9</Position>
       <Comment>金额（报销）</Comment>
       <DataType>decimal(32,8 digit)|0s</DataType>
     </column>
-    <key id="287" parent="255" name="PRIMARY">
+    <key id="288" parent="255" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="288" parent="256" name="id">
+    <column id="289" parent="256" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="289" parent="256" name="userid">
+    <column id="290" parent="256" name="userid">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="290" parent="256" name="Name">
+    <column id="291" parent="256" name="Name">
       <Position>3</Position>
       <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="291" parent="256" name="BasciMoney">
+    <column id="292" parent="256" name="BasciMoney">
       <Position>4</Position>
       <Comment>基本工资</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="292" parent="256" name="Late_Money">
+    <column id="293" parent="256" name="Late_Money">
       <Position>5</Position>
       <Comment>迟到扣工资</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="293" parent="256" name="Absenteeism_Money">
+    <column id="294" parent="256" name="Absenteeism_Money">
       <Position>6</Position>
       <Comment>旷工扣的钱 可以为空</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="294" parent="256" name="Early_Leave">
+    <column id="295" parent="256" name="Early_Leave">
       <Position>7</Position>
       <Comment>早退扣工资</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="295" parent="256" name="Month">
+    <column id="296" parent="256" name="Month">
       <Position>8</Position>
       <Comment>离开的总时间</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="296" parent="256" name="Bonus">
+    <column id="297" parent="256" name="Bonus">
       <Position>9</Position>
       <Comment>奖金</Comment>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="297" parent="256" name="post">
+    <column id="298" parent="256" name="post">
       <Position>10</Position>
       <Comment>岗位</Comment>
       <DataType>varchar(15)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="298" parent="256" name="PRIMARY">
+    <key id="299" parent="256" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="300" parent="257" name="job_id">
+      <Position>1</Position>
+      <DataType>int(20)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="301" parent="257" name="name">
+      <Position>2</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="302" parent="257" name="birthday">
+      <Position>3</Position>
+      <DataType>varchar(45)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="303" parent="257" name="sex">
+      <Position>4</Position>
+      <DataType>varchar(5)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="304" parent="257" name="mobile">
+      <Position>5</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="305" parent="257" name="post">
+      <Position>6</Position>
+      <Comment>岗位</Comment>
+      <DataType>int(20)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="306" parent="257" name="password">
+      <Position>7</Position>
+      <DataType>varchar(15)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="307" parent="257" name="role">
+      <Position>8</Position>
+      <Comment>状态</Comment>
+      <DataType>varchar(5)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="308" parent="257" name="department_id">
+      <Position>9</Position>
+      <DataType>varchar(5)|0s</DataType>
+    </column>
+    <column id="309" parent="257" name="status">
+      <Position>10</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>1</DefaultExpression>
+    </column>
+    <key id="310" parent="257" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>job_id</ColNames>
       <Primary>1</Primary>
     </key>
   </database-model>
