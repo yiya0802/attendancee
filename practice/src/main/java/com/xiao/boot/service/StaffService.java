@@ -46,4 +46,5 @@ public interface StaffService {
 
      R findPageStaff();
 
+    List<Staff> findStaffListByName(String name);
 }

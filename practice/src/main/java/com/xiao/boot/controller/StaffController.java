@@ -315,13 +315,14 @@ public class StaffController {
 
     public R findStaffByName(String  name)
     {
+
         if (StringUtils.isEmpty(name))
         {
             return R.failed("用户名不能为空！");
         }
         if (staffService.findStaffByName(name)==null)
         {
-            return R.failed("查无此人");
+            return R.ok(staffService.findStaffListByName(name),"两人名字重复");
         }
         return R.ok(staffService.findStaffByName(name));
     }

@@ -117,7 +117,12 @@ public class StaffServiceImpl implements StaffService {
     public Staff findStaffByName(String name) {
         QueryWrapper<Staff>queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("name",name);
+        if (staffMapper.selectCount(queryWrapper)>1)
+        {
+            return null;
+        }
         return staffMapper.selectOne(queryWrapper);
+
     }
 
     @Override
@@ -144,6 +149,13 @@ return staffMapper.selectList(queryWrapper);
         return R.failed("无信息");
     }
     return R.ok(page,"返回信息");
+    }
+
+    @Override
+    public List<Staff> findStaffListByName(String name) {
+        QueryWrapper<Staff>queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("name",name);
+        return staffMapper.selectList(queryWrapper);
     }
 
 
