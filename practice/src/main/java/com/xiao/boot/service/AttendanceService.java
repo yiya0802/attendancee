@@ -12,4 +12,6 @@ public interface AttendanceService {
     public List<Attendance> findDepDakaRecord(String departmentId);
 
     public List<Attendance> findDakaRecordByName(String departmentId, String name);
+
+    List<Attendance> findDakaRecordByType(Integer type);
 }

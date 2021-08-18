@@ -45,4 +45,14 @@ public class SalaryServiceImpl implements SalaryService {
         queryWrapper.eq("post",post);
         return departmentMapper.delete(queryWrapper);
     }
+
+    @Override
+    public Salary findSalaryById(Integer jobId) {
+        return salaryMapper.selectById(jobId);
+    }
+
+    @Override
+    public Integer updateSalary(Salary salary) {
+        return salaryMapper.updateById(salary);
+    }
 }

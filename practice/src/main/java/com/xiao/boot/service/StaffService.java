@@ -2,7 +2,9 @@ package com.xiao.boot.service;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xiao.boot.bean.dto.AddStaff;
+import com.xiao.boot.bean.po.R;
 import com.xiao.boot.bean.po.Staff;
 
 public interface StaffService {
@@ -37,4 +39,11 @@ public interface StaffService {
     String findDepartIdByName(String name);
 
     Staff findStaffByName(String name);
+
+    List<Integer> findAllStaffID();
+
+    List<Staff> findStaffByStatus(Integer status);
+
+     R findPageStaff();
+
 }

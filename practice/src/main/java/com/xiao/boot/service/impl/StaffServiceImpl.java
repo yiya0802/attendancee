@@ -1,7 +1,14 @@
 package com.xiao.boot.service.impl;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xiao.boot.bean.po.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
@@ -64,14 +71,22 @@ public class StaffServiceImpl implements StaffService {
      */
     public Integer updateStaff(Staff staff) {
         Staff staff1=staffMapper.selectById(staff.getJobId());
-        QueryWrapper<Staff> updateWrapper=new QueryWrapper<>();
-        updateWrapper.eq("name",staff.getName()).eq("mobile",staff.getMobile()).eq("password",staff.getPassword());
+        UpdateWrapper<Staff> updateWrapper=new UpdateWrapper<>();
+        updateWrapper.set("name",staff.getName())
+                .set("mobile",staff.getMobile())
+               .set("password",staff.getPassword());
         return staffMapper.update(staff1,updateWrapper);
+//        return staffMapper.update(staff1, Wrappers.<Staff>lambdaUpdate()
+//        .eq(Staff::getName,staff.getName()).eq(Staff::getMobile,staff.getMobile())
+//        .eq(Staff::getPassword,staff.getPassword()));
     }
 
     @Override
     public Integer deleteStaffById(Integer jobId) {
-        return staffMapper.deleteById(jobId);
+        Staff staff=staffMapper.selectById(jobId);
+        staff.setStatus(0);
+        staffMapper.updateById(staff);
+        return 1;
     }
 
     @Override
@@ -103,6 +118,32 @@ public class StaffServiceImpl implements StaffService {
         QueryWrapper<Staff>queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("name",name);
         return staffMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public List<Integer> findAllStaffID() {
+        LambdaQueryWrapper<Staff>queryWrapper=new LambdaQueryWrapper<>();
+        queryWrapper.select(Staff::getJobId);
+
+       return staffMapper.selectObjs(queryWrapper).stream().
+               map(o -> (Integer)o).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Staff> findStaffByStatus(Integer status) {
+        QueryWrapper<Staff>queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("status",status);
+return staffMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public R findPageStaff() {
+    Page<Staff>page=staffMapper.selectPage(new Page<>(1,3),Wrappers.<Staff>query(null));
+    if (page.getTotal()==0)
+    {
+        return R.failed("无信息");
+    }
+    return R.ok(page,"返回信息");
     }
 
 

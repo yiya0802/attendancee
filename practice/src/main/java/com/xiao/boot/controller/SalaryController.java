@@ -89,7 +89,7 @@ public class SalaryController {
         if (StringUtils.isEmpty(department.getDepartmentId()) || StringUtils.isEmpty(department.getPost()
         )  || StringUtils.isEmpty(department.getName() ) ||department.getSalary()==null)
         {
-            return R.failed("不能为空！");
+            return R.failed("不能为空!");
         }
         Department temp=departmentService.findDepartmentById(department.getDepartmentId());
         if (temp!=null)

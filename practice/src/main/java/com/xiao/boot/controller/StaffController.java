@@ -1,9 +1,11 @@
 package com.xiao.boot.controller;
 
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import com.xiao.boot.bean.dto.AddStaff;
 import com.xiao.boot.bean.po.R;
 import com.xiao.boot.bean.po.Staff;
 import com.xiao.boot.service.StaffService;
+import org.thymeleaf.util.StringUtils;
 
 @Controller
 @RequestMapping("staff")
@@ -115,23 +118,26 @@ public class StaffController {
         return R.ok(row, "添加成功");
     }
 
-    // 返回所有员工信息页面
-    @GetMapping("/all_staff_page")
+    @GetMapping("/edit-staff-page")
     @ResponseBody
     /**
      *
-     * @description: 查询所有员工信息
-     * @param: []
+     * @description: edit staff 
+     * @param: staff
      * @return: com.xiao.boot.bean.po.R<java.util.List < com.xiao.boot.bean.po.Staff>>
      * @date: 2021/8/16
      */
 
-    public R<List<Staff>> findAllStaff() {
-        List<Staff> allStaff = staffService.findAllStaff();
-        if (allStaff.size() == 0) {
+    public R editStaff(Staff staff) {
+        HashSet<Integer>hashSet=new HashSet<>();
+
+        hashSet.addAll( staffService.findAllStaffID());
+        if (!hashSet.contains(staff.getJobId()))
+        {
             return R.failed();
         }
-        return R.ok(allStaff);
+       int num= staffService.updateStaff(staff);
+        return R.ok(num);
 
     }
 
@@ -144,7 +150,7 @@ public class StaffController {
     }
 
     // 修改员工信息姓名、地址、电话、密码可以修改
-    @PostMapping("/update_staff")
+    @GetMapping("/update_staff")
     @ResponseBody
     /**
      *
@@ -156,7 +162,8 @@ public class StaffController {
 
     public R<Integer> updateStaff(Staff staff) {
         Integer row = staffService.updateStaff(staff);
-        if (row == null) return R.failed();
+        if (row == 0)
+        {return R.failed("update failed");}
         return R.ok(row);
     }
 
@@ -173,8 +180,7 @@ public class StaffController {
 
     public R<Integer> delete_staff_page(@RequestParam("id") String jobId) {
         Integer row = staffService.deleteStaffById(Integer.parseInt(jobId));
-        if (row == 0)
-            return R.failed();
+        if (row == 0) return R.failed();
         return R.ok(row, "删除成功");
     }
 
@@ -295,6 +301,51 @@ public class StaffController {
             return R.failed();
         }
         return R.ok(allStaff);
+    }
+
+    @GetMapping("/findStaffByStatus")
+    @ResponseBody
+    /**
+     *
+     * @description: 0是离职的了，1是没离职的
+     * @param: [status]
+     * @return: com.xiao.boot.bean.po.R
+     * @date: 2021/8/17
+     */
+
+    public R findStaffByStatus(Integer status)
+    {
+    List<Staff> list=staffService.findStaffByStatus(status);
+    return R.ok(list);
+    }
+
+    @GetMapping("/findStaffByName")
+    @ResponseBody
+/**
+ *
+ * @description: 根据name查询员工
+ * @param: [name]
+ * @return: com.xiao.boot.bean.po.R
+ * @date: 2021/8/18
+ */
+
+    public R findStaffByName(String  name)
+    {
+        if (StringUtils.isEmpty(name))
+        {
+            return R.failed("用户名不能为空！");
+        }
+        if (staffService.findStaffByName(name)==null)
+        {
+            return R.failed("查无此人");
+        }
+        return R.ok(staffService.findStaffByName(name));
+    }
+    @GetMapping("/findPageStaff")
+    @ResponseBody
+    public R findPage()
+    {
+        return  staffService.findPageStaff();
     }
 
 }

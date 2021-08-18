@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <packaging>war</packaging>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.hodo</groupId>
-    <artifactId>practice</artifactId>
+    <groupId>com.xiao</groupId>
+    <artifactId>boot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>practice</name>
     <description>Demo project for Spring Boot</description>
@@ -122,7 +121,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.4.1</version>
                 <configuration>
-                    <mainClass>com.hodo.practice.PracticeApplication</mainClass>
+                    <mainClass>com.xiao.boot.PracticeApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

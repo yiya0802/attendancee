@@ -24,5 +24,6 @@ public class Staff implements Serializable {
     private Integer role;
     private String password;
     private String departmentId;
+    Integer status;
 
 }

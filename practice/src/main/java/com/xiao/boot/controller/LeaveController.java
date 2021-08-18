@@ -1,5 +1,6 @@
 package com.xiao.boot.controller;
 
+import com.xiao.boot.bean.po.Staff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,6 +52,8 @@ public class LeaveController
 
         else if (c.getLeavetype()==1)
         {
+            Staff staff=staffService.findStaffByName(c.getName());
+            staffService.deleteStaffById(staff.getJobId());
             return R.ok(leaveService.addResignProcess(c));
         }
 

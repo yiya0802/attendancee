@@ -43,4 +43,11 @@ public class AttendanceServiceImpl implements AttendanceService {
         wrapper.eq("name",name).eq("department_id",departmentId);
         return attendanceMapper.selectList(wrapper);
     }
+
+    @Override
+    public List<Attendance> findDakaRecordByType(Integer type) {
+        QueryWrapper<Attendance> querywrapper=new QueryWrapper<>();
+        querywrapper.eq("attendance_type",type);
+        return attendanceMapper.selectList(querywrapper);
+    }
 }

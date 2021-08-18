@@ -11,4 +11,8 @@ public interface SalaryService {
     int addPostSalary(Department department1);
 
     int deletePostSalary(String post);
+
+    Salary findSalaryById(Integer jobId);
+
+    Integer updateSalary(Salary salary);
 }
