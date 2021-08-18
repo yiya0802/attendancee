@@ -218,25 +218,9 @@ public class StaffController {
         return "redirect:/role_manage_page";
     }
 
+
+
     // 查看个人信息
-    @GetMapping("/self_info_page")
-    /**
-     *
-     * @description: 查看个人信息
-     * @param: [jobId]
-     * @return: com.xiao.boot.bean.po.R<com.xiao.boot.bean.po.Staff>
-     * @date: 2021/8/16
-     */
-
-    public R<Staff> self_info_page(Integer jobId) {
-
-        Staff staff = staffService.findStaffById(jobId);
-        if (staff == null)
-            return R.failed();
-        return R.ok(staff);
-    }
-
-    // 修改个人信息
     @GetMapping("/update_selfInfo_page")
     @ResponseBody
     /**
