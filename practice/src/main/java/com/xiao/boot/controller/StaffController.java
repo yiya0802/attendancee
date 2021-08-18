@@ -1,16 +1,14 @@
 package com.xiao.boot.controller;
-
 import java.util.HashSet;
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import com.baomidou.mybatisplus.core.toolkit.Assert;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import com.xiao.boot.bean.dto.AddStaff;
@@ -45,7 +43,7 @@ public class StaffController {
                    @RequestParam("password") String password) {
         Staff staff = staffService.login(Integer.valueOf(jobId), password);
         if (staff == null) {
-            return R.failed("登陆失败");
+            return R.failed("用户名不存在");
         }
         if (staff.getPassword() != password) {
             return R.failed("密码不正确");
@@ -309,6 +307,10 @@ public class StaffController {
     public R findStaffByStatus(Integer status)
     {
     List<Staff> list=staffService.findStaffByStatus(status);
+    if (CollectionUtils.isEmpty(list))
+    {
+        return R.failed("无数据");
+    }
     return R.ok(list);
     }
 
@@ -337,8 +339,30 @@ public class StaffController {
     }
     @GetMapping("/findPageStaff")
     @ResponseBody
-    public R findPage()
+    public R findPage(String name,Integer status)
     {
+        if (name==null)
+        {
+            List<Staff> list=staffService.findStaffByStatus(status);
+            if (CollectionUtils.isEmpty(list))
+            {
+                return R.failed("无数据");
+            }
+            return R.ok(list);
+        }
+        if (status==null)
+        {
+            if (StringUtils.isEmpty(name))
+            {
+                return R.failed("用户名不能为空！");
+            }
+            if (staffService.findStaffByName(name)==null)
+            {
+                return R.ok(staffService.findStaffListByName(name),"两人名字重复");
+            }
+            return R.ok(staffService.findStaffByName(name));
+        }
+
         return  staffService.findPageStaff();
     }
 
