@@ -1094,7 +1094,6 @@ SELECT|sys.sys_config
     <column id="309" parent="257" name="status">
       <Position>10</Position>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
       <DefaultExpression>1</DefaultExpression>
     </column>
     <key id="310" parent="257" name="PRIMARY">
