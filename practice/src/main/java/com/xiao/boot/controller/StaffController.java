@@ -382,10 +382,26 @@ public class StaffController {
     }
     @GetMapping("/updateStatus")
     @ResponseBody
-    public R updateStatus(Integer jobId)
+    /**
+     *
+     * @description: 更新用户状态
+     * @param: [jobId, status]
+     * @return: com.xiao.boot.bean.po.R
+     * @date: 2021/8/19
+     */
+
+    public R updateStatus(Integer jobId,Integer status)
     {
+        if (status!=0 && status!=1)
+        {
+            return R.failed("只能为0和1");
+        }
         Staff staff=staffService.findStaffById(jobId);
-        staff.setStatus((staff.getStatus()==0)?1:0);
+        if (staff==null)
+        {
+            return R.failed("用户不存在");
+        }
+        staff.setStatus(status);
         return staffService.updateStaffStatus(staff)==0?R.failed("更新状态失败"):R.ok(staffService.updateStaffStatus(staff),"更新状态成功");
     }
 
