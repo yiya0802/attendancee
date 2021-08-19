@@ -51,4 +51,6 @@ public interface StaffService {
     R findPageStaffByStatus(Integer status, Long current, Long size);
 
     R findPageStaffByName(String name, Long current, Long size);
+
+    Integer updateStaffStatus(Staff staff);
 }

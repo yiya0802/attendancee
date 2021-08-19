@@ -189,5 +189,10 @@ public class StaffServiceImpl implements StaffService {
         return page.getTotal()==0?R.failed("无信息"):R.ok(page,"返回信息");
     }
 
+    @Override
+    public Integer updateStaffStatus(Staff staff) {
+        return staffMapper.updateById(staff);
+    }
+
 
 }

@@ -380,5 +380,13 @@ public class StaffController {
         return R.failed("不能同时查询name和status");
 
     }
+    @GetMapping("/updateStatus")
+    @ResponseBody
+    public R updateStatus(Integer jobId)
+    {
+        Staff staff=staffService.findStaffById(jobId);
+        staff.setStatus((staff.getStatus()==0)?1:0);
+        return staffService.updateStaffStatus(staff)==0?R.failed("更新状态失败"):R.ok(staffService.updateStaffStatus(staff),"更新状态成功");
+    }
 
 }
