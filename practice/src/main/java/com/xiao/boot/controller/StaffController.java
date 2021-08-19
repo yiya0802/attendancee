@@ -348,35 +348,36 @@ public class StaffController {
      * @date: 2021/8/19
      */
 
-    public R findPage(String name,Integer status)
+    public R findPage(String name,Integer status,Long current,Long size)
     {
+        if (current==null || size==null)
+        {
+            return R.failed("current 和 size不能为空");
+        }
+        //只输入了current和size
         if (name==null&&status==null)
         {
-            return  staffService.findPageStaff();
+            return  staffService.findPageStaff(current,size);
         }
-
+        //按照status查询
         if (name==null)
         {
-            List<Staff> list=staffService.findStaffByStatus(status);
-            if (CollectionUtils.isEmpty(list))
-            {
-                return R.failed("无数据");
-            }
-            return R.ok(list);
+         if (status!=0 && status!=1)
+         {
+             return R.failed("status只能为0和1");
+         }
+         return staffService.findPageStaffByStatus(status,current,size);
         }
+        //按照name查询
         if (status==null)
         {
-            if (StringUtils.isEmpty(name))
-            {
-                return R.failed("用户名不能为空！");
-            }
             if (staffService.findStaffByName(name)==null)
             {
-                return R.ok(staffService.findStaffListByName(name),"两人名字重复");
+                return CollectionUtils.isEmpty(staffService.findStaffListByName(name))?(R.failed("用户名不存在")):(R.ok(staffService.findPageStaffByName(name,current,size),"两人名字重复"));
             }
-            return R.ok(staffService.findStaffByName(name));
+            return R.ok(staffService.findPageStaffByName(name,current,size));
         }
-        return R.failed("不能同时输入name和status");
+        return R.failed();
 
     }
 

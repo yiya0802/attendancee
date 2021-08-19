@@ -45,4 +45,10 @@ public interface StaffService {
      R findPageStaff();
 
     List<Staff> findStaffListByName(String name);
+
+    R findPageStaff(Long current, Long size);
+
+    R findPageStaffByStatus(Integer status, Long current, Long size);
+
+    R findPageStaffByName(String name, Long current, Long size);
 }

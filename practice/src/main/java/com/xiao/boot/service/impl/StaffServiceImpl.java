@@ -116,7 +116,8 @@ public class StaffServiceImpl implements StaffService {
     public Staff findStaffByName(String name) {
         QueryWrapper<Staff>queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("name",name);
-        if (staffMapper.selectCount(queryWrapper)>1)
+        //有重复或者不存在
+        if (staffMapper.selectCount(queryWrapper)>1 || staffMapper.selectCount(queryWrapper)==0)
         {
             return null;
         }
@@ -155,6 +156,37 @@ public class StaffServiceImpl implements StaffService {
         QueryWrapper<Staff>queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("name",name);
         return staffMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public R findPageStaff(Long current, Long size) {
+        List<Staff>staff=staffMapper.selectList(null);
+        Long Assize=Math.min(staff.size(),size);
+        Long currents=Math.min(current,1);
+        Page<Staff>page=staffMapper.selectPage(new Page<>(currents,Assize),Wrappers.<Staff>query(null));
+        return page.getTotal()==0?R.failed("无信息"):R.ok(page,"返回信息");
+    }
+
+    @Override
+    public R findPageStaffByStatus(Integer status, Long current, Long size) {
+        QueryWrapper<Staff>queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("status",status);
+        List<Staff>staff=staffMapper.selectList(queryWrapper);
+        Long Assize=Math.min(staff.size(),size);
+        Long currents=Math.min(current,1);
+        Page<Staff>page=staffMapper.selectPage(new Page<>(currents,Assize),queryWrapper);
+        return page.getTotal()==0?R.failed("无信息"):R.ok(page,"返回信息");
+    }
+
+    @Override
+    public R findPageStaffByName(String name, Long current, Long size) {
+        QueryWrapper<Staff>queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("name",name);
+        List<Staff>staff=staffMapper.selectList(queryWrapper);
+        Long Assize=Math.min(staff.size(),size);
+        Long currents=Math.min(current,1);
+        Page<Staff>page=staffMapper.selectPage(new Page<>(currents,Assize),queryWrapper);
+        return page.getTotal()==0?R.failed("无信息"):R.ok(page,"返回信息");
     }
 
 
