@@ -377,7 +377,7 @@ public class StaffController {
             }
             return R.ok(staffService.findPageStaffByName(name,current,size));
         }
-        return R.failed();
+        return R.failed("不能同时查询name和status");
 
     }
 
