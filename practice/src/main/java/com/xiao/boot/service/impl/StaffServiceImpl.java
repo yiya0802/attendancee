@@ -137,7 +137,7 @@ public class StaffServiceImpl implements StaffService {
     public List<Staff> findStaffByStatus(Integer status) {
         QueryWrapper<Staff>queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("status",status);
-return staffMapper.selectList(queryWrapper);
+        return staffMapper.selectList(queryWrapper);
     }
 
     @Override

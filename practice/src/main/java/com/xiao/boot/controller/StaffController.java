@@ -16,6 +16,7 @@ import com.xiao.boot.bean.po.R;
 import com.xiao.boot.bean.po.Staff;
 import com.xiao.boot.service.StaffService;
 import org.thymeleaf.util.StringUtils;
+import org.thymeleaf.util.Validate;
 
 @Controller
 @RequestMapping("staff")
@@ -339,8 +340,21 @@ public class StaffController {
     }
     @GetMapping("/findPageStaff")
     @ResponseBody
+    /**
+     *
+     * @description: name==null，按照status查询，status=null，按照name查询
+     * @param: [name, status]
+     * @return: com.xiao.boot.bean.po.R
+     * @date: 2021/8/19
+     */
+
     public R findPage(String name,Integer status)
     {
+        if (name==null&&status==null)
+        {
+            return  staffService.findPageStaff();
+        }
+
         if (name==null)
         {
             List<Staff> list=staffService.findStaffByStatus(status);
@@ -362,8 +376,8 @@ public class StaffController {
             }
             return R.ok(staffService.findStaffByName(name));
         }
+        return R.failed("不能同时输入name和status");
 
-        return  staffService.findPageStaff();
     }
 
 }
