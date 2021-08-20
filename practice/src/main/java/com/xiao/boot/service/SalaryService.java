@@ -2,6 +2,7 @@ package com.xiao.boot.service;
 
 import java.util.List;
 
+import com.xiao.boot.bean.dto.AddStaff;
 import com.xiao.boot.bean.po.Department;
 import com.xiao.boot.bean.po.Salary;
 
@@ -15,4 +16,6 @@ public interface SalaryService {
     Salary findSalaryById(Integer jobId);
 
     Integer updateSalary(Salary salary);
+
+    Integer addStaffSalary(AddStaff staff, Integer salary);
 }

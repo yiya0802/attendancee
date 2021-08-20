@@ -20,7 +20,7 @@ public class Staff implements Serializable {
     private String sex;
     private String birthday;
     private String mobile;
-    private int post;
+    private String post;
     private Integer role;
     private String password;
     private String departmentId;

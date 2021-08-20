@@ -4,6 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import com.baomidou.mybatisplus.core.toolkit.Assert;
+import com.xiao.boot.service.SalaryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,8 @@ import org.thymeleaf.util.Validate;
 public class StaffController {
     @Autowired
     StaffService staffService;
+    @Autowired
+    SalaryService salaryService;
 
     @GetMapping(value = {"/", "/login"})
     @ResponseBody
@@ -111,17 +114,38 @@ public class StaffController {
      * @date: 2021/8/16
      */
 
-    public R<Integer> addStaff(AddStaff staff) {
-        Staff staff1=staffService.findStaffById(staff.getJobId());
-        if (staff1!=null)
+    public R<Integer> addStaff(AddStaff staff,Integer salary) {
+        if (staff.getName()==null)
         {
-            return R.failed("添加失败，不能重复id");
+            return R.failed("姓名不能为空");
         }
+        if (staff.getSex()==null)
+        {
+            return R.failed("性别不能为空");
+        }
+        if (staff.getMobile()==null)
+        {
+            return R.failed("手机号不能为空");
+        }
+        if (staff.getPassword()==null)
+        {
+            return R.failed("密码不能为空");
+        }
+        if (staff.getPost()==null)
+        {
+            return R.failed("岗位不能为空");
+        }
+        if (staff.getRole()==null)
+        {
+            return R.failed("角色不能为空");
+        }
+
         Staff staff2=new Staff();
         BeanUtils.copyProperties(staff,staff2);
         Integer row = staffService.addStaff(staff2);
-        if (row == 0) {
-            return R.failed();
+        Integer row2=salaryService.addStaffSalary(staff,salary);
+        if (row == 0 || row2==0) {
+            return R.failed("添加失败");
         }
         return R.ok(row, "添加成功");
     }

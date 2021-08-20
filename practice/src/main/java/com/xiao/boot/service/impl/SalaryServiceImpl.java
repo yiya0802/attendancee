@@ -1,7 +1,9 @@
 package com.xiao.boot.service.impl;
 
+import java.util.Calendar;
 import java.util.List;
 
+import com.xiao.boot.bean.dto.AddStaff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,5 +56,18 @@ public class SalaryServiceImpl implements SalaryService {
     @Override
     public Integer updateSalary(Salary salary) {
         return salaryMapper.updateById(salary);
+    }
+
+    @Override
+    public Integer addStaffSalary(AddStaff staff, Integer salary) {
+        Calendar calendar=null;
+        calendar=Calendar.getInstance();
+        Salary salary2=new Salary();
+        salary2.setName(staff.getName());
+        salary2.setBascimoney(salary);
+        salary2.setUserid(staff.getJobId());
+        salary2.setPost(staff.getPost());
+        salary2.setMonth(calendar.get(Calendar.MONTH));
+        return salaryMapper.insert(salary2);
     }
 }

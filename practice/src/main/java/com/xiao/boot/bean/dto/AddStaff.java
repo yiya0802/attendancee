@@ -1,5 +1,4 @@
 package com.xiao.boot.bean.dto;
-
 import lombok.Data;
 
 /**
@@ -11,14 +10,13 @@ import lombok.Data;
  */
 @Data
 public class AddStaff {
+
     private Integer jobId;
     private String name;
     private String sex;
-    private String birthday;
     private String mobile;
-    private int post;
+    private String post;
     private Integer role;
     private String password;
-    private String departmentId;
     private Integer status=1;
 }

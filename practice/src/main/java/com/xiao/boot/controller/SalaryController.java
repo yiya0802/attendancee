@@ -128,6 +128,7 @@ public class SalaryController {
             return R.failed("删除失败");
         }
         return R.ok(num);
+
     }
 
 
