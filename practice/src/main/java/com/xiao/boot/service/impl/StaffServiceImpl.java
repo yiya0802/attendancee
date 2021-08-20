@@ -205,9 +205,7 @@ public class StaffServiceImpl implements StaffService {
             return R.failed("员工工号不能为空！");
         }
         //修改salary
-        if (salary!=null)
-        {
-            if (salaryMapper.selectById(staff1.getJobId())==null)
+        if (salaryMapper.selectById(staff1.getJobId())==null)
             {
                 return R.failed("薪资表不存在此员工");
             }
@@ -216,7 +214,7 @@ public class StaffServiceImpl implements StaffService {
             salary1.setName(staff1.getName());
             salary1.setPost(staff1.getPost());
             salaryMapper.updateById(salary1);
-        }
+
         //修改员工信息
         if (staffMapper.selectById(staff1.getJobId())==null)
         {
