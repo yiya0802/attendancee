@@ -149,6 +149,22 @@ public class StaffController {
         }
         return R.ok(row, "添加成功");
     }
+    @GetMapping("/edit_staff")
+    @ResponseBody
+    /**
+     *
+     * @description: edit staff
+     * @param: [staff, salary]
+     * @return: com.xiao.boot.bean.po.R
+     * @date: 2021/8/20
+     */
+
+    public R editStaff(AddStaff staff,Integer salary)
+    {
+       Staff staff1=new Staff();
+       BeanUtils.copyProperties(staff,staff1);
+       return staffService.editStaff(staff1,salary);
+    }
 
     @GetMapping("/edit-staff-page")
     @ResponseBody

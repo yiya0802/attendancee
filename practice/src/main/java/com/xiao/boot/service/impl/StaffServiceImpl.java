@@ -3,6 +3,8 @@ package com.xiao.boot.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.xiao.boot.bean.po.Salary;
+import com.xiao.boot.mapper.SalaryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
@@ -22,6 +24,8 @@ import com.xiao.boot.service.StaffService;
 public class StaffServiceImpl implements StaffService {
     @Autowired
     StaffMapper staffMapper;
+    @Autowired
+    SalaryMapper salaryMapper;
     // 登录
     @Override
     public Staff login(Integer jobId, String password) {
@@ -192,6 +196,35 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public Integer updateStaffStatus(Staff staff) {
         return staffMapper.updateById(staff);
+    }
+
+    @Override
+    public R editStaff(Staff staff1, Integer salary) {
+        if (staff1.getJobId()==null)
+        {
+            return R.failed("员工工号不能为空！");
+        }
+        //修改salary
+        if (salary!=null)
+        {
+            if (salaryMapper.selectById(staff1.getJobId())==null)
+            {
+                return R.failed("薪资表不存在此员工");
+            }
+            Salary salary1= salaryMapper.selectById(staff1.getJobId());
+            salary1.setBascimoney(salary);
+            salary1.setName(staff1.getName());
+            salary1.setPost(staff1.getPost());
+            salaryMapper.updateById(salary1);
+        }
+        //修改员工信息
+        if (staffMapper.selectById(staff1.getJobId())==null)
+        {
+            return R.failed("员工表此员工不存在");
+        }
+        staffMapper.updateById(staff1);
+
+       return R.ok("修改成功");
     }
 
 
