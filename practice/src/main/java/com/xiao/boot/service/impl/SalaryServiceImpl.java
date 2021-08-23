@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.xiao.boot.bean.dto.AddStaff;
+import com.xiao.boot.bean.po.Staff;
+import com.xiao.boot.mapper.StaffMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,8 @@ public class SalaryServiceImpl implements SalaryService {
     SalaryMapper salaryMapper;
     @Autowired
     DepartmentMapper departmentMapper;
+    @Autowired
+    StaffMapper staffMapper;
 
     @Override
     public List<Salary> findSalaryByName(String name) {
@@ -60,8 +64,14 @@ public class SalaryServiceImpl implements SalaryService {
 
     @Override
     public Integer addStaffSalary(AddStaff staff, Integer salary) {
-        Calendar calendar=null;
-        calendar=Calendar.getInstance();
+        QueryWrapper<Salary> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("userid",staff.getJobId());
+        Salary salary1=salaryMapper.selectOne(queryWrapper);
+        if (salary1!=null)
+        {
+            return 0;
+        }
+        Calendar calendar=Calendar.getInstance();
         Salary salary2=new Salary();
         salary2.setName(staff.getName());
         salary2.setBascimoney(salary);

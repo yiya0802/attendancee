@@ -82,7 +82,7 @@ public class StaffServiceImpl implements StaffService
         }
         Staff staff2=new Staff(staff.getJobId(),staff.getName(),staff.getSex(),null,
                 staff.getMobile(),staff.getPost(),staff.getRole(),staff.getPassword(),null,staff.getStatus());
-        return staffMapper.insert(staff2);
+        return staffMapper.insertAddStaff(staff2);
     }
     
     @Override
