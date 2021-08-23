@@ -44,7 +44,7 @@ public class StaffServiceImpl implements StaffService
             return null;
         }
         // 按条件查询，如果staff属性为空，则不按该列查询
-        Staff staff = (Staff)staffMapper.selectById(jobId);
+        Staff staff = staffMapper.selectById(jobId);
         return staff;
     }
     
@@ -191,7 +191,7 @@ public class StaffServiceImpl implements StaffService
     {
         List<Staff> staff = staffMapper.selectList(null);
         Long Assize = Math.min(staff.size(), size);
-        if (current <= (staff.size() / size))
+        if (current <= (staff.size() / size)+1)
         {
             currents = current;
         }
@@ -201,7 +201,7 @@ public class StaffServiceImpl implements StaffService
         {
             return R.ok(pageStaffPage, "输入的大小太大，显示所有信息");
         }
-        if (current > (staff.size() / size))
+        if (current > (staff.size() / size)+1)
         {
             return R.failed("输入的页码太大，重新输入");
         }
@@ -216,7 +216,7 @@ public class StaffServiceImpl implements StaffService
         queryWrapper.eq("status", status);
         List<Staff> staff = staffMapper.selectList(queryWrapper);
         Long Assize = Math.min(staff.size(), size);
-        if (current <= (staff.size() / size))
+        if (current <= (staff.size() / size)+1)
         {
             currents = current;
         }
@@ -225,7 +225,7 @@ public class StaffServiceImpl implements StaffService
         {
             return R.ok(page, "输入的大小太大，显示所有信息");
         }
-        if (current > (staff.size() / size))
+        if (current > (staff.size() / size)+1)
         {
             return R.failed("输入的页码太大，重新输入");
         }
@@ -239,7 +239,7 @@ public class StaffServiceImpl implements StaffService
         queryWrapper.eq("name", name);
         List<Staff> staff = staffMapper.selectList(queryWrapper);
         Long Assize = Math.min(staff.size(), size);
-        if (current <= (staff.size() / size))
+        if (current <= (staff.size() / size)+1)
         {
             currents = current;
         }
@@ -248,7 +248,7 @@ public class StaffServiceImpl implements StaffService
         {
             return R.ok(page, "输入的大小太大，显示所有信息");
         }
-        if (current > (staff.size() / size))
+        if (current > (staff.size() / size)+1)
         {
             return R.failed("输入的页码太大，重新输入");
         }
