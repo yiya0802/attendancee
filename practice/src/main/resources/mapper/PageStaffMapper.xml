@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiao.boot.mapper.PageStaffMapper">
+<!--    <resultMap type="pageStaffMap" id="com.xiao.boot.bean.dto.PageStaff">-->
+<!--        <id property="jobId" column="jobId"  />-->
+<!--        <result property="name" column="name"  />-->
+<!--        <result property="sex" column="sex"  />-->
+<!--        <result property="birthday" column="birthday"  />-->
+<!--        <result property="mobile" column="mobile" />-->
+<!--        <result property="post" column="post"  />-->
+<!--        <result property="role" column="role"  />-->
+<!--        <result property="password" column="password"  />-->
+<!--        <result property="departmentId" column="departmentId"  />-->
+<!--        <result property="salary" column="salary"  />-->
+<!--    </resultMap>-->
+    <select id="selectPageAndSalary" resultType="com.xiao.boot.bean.dto.PageStaff">
+        SELECT s.*,(l.BasciMoney-l.Late_Money-l.Early_Leave-l.Absenteeism_Money+l.Bonus) as salary
+        FROM practice2.staff s left join practice2.salary l on s.job_id=l.userid
+    </select>
+
+    <select id="selectPageAndSalaryByStatus" resultType="com.xiao.boot.bean.dto.PageStaff">
+        SELECT s.*,(l.BasciMoney-l.Late_Money-l.Early_Leave-l.Absenteeism_Money+l.Bonus) as salary
+        FROM practice2.staff s left join practice2.salary l on s.job_id=l.userid where s.status=#{staff}
+    </select>
+
+    <select id="selectPageAndSalaryByName" resultType="com.xiao.boot.bean.dto.PageStaff">
+        SELECT s.*,(l.BasciMoney-l.Late_Money-l.Early_Leave-l.Absenteeism_Money+l.Bonus) as salary
+        FROM practice2.staff s left join practice2.salary l on s.job_id=l.userid where s.name=#{name}
+    </select>
+
+
+</mapper>
