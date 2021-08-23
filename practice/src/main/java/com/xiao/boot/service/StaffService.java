@@ -2,6 +2,7 @@ package com.xiao.boot.service;
 
 import java.util.List;
 
+import com.xiao.boot.bean.dto.AddStaff;
 import com.xiao.boot.bean.po.R;
 import com.xiao.boot.bean.po.Staff;
 
@@ -18,7 +19,7 @@ public interface StaffService {
     public Integer resetCode(Integer id);
 
     // 添加员工
-    public Integer addStaff(Staff staff);
+    public Integer addStaff(AddStaff staff);
 
     // 查找所有员工
     public List<Staff> findAllStaff();

@@ -3,10 +3,12 @@ package com.xiao.boot.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.xiao.boot.bean.dto.AddStaff;
 import com.xiao.boot.bean.dto.PageStaff;
 import com.xiao.boot.bean.po.Salary;
 import com.xiao.boot.mapper.PageStaffMapper;
 import com.xiao.boot.mapper.SalaryMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
@@ -72,9 +74,15 @@ public class StaffServiceImpl implements StaffService
     }
     
     @Override
-    public Integer addStaff(Staff staff)
+    public Integer addStaff(AddStaff staff)
     {
-        return staffMapper.insert(staff);
+        Staff staff1=staffMapper.selectById(staff.getJobId());
+        if (staff1!=null){
+            return 0;
+        }
+        Staff staff2=new Staff(staff.getJobId(),staff.getName(),staff.getSex(),null,
+                staff.getMobile(),staff.getPost(),staff.getRole(),staff.getPassword(),null,staff.getStatus());
+        return staffMapper.insert(staff2);
     }
     
     @Override
