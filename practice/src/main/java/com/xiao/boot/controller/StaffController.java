@@ -139,6 +139,10 @@ public class StaffController {
         {
             return R.failed("角色不能为空");
         }
+        if (salary==null)
+        {
+            return R.failed("请输入员工的薪资");
+        }
 
         Staff staff2=new Staff();
         BeanUtils.copyProperties(staff,staff2);

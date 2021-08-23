@@ -26,6 +26,8 @@ public class StaffServiceImpl implements StaffService {
     StaffMapper staffMapper;
     @Autowired
     SalaryMapper salaryMapper;
+    private long currents=1;
+
     // 登录
     @Override
     public Staff login(Integer jobId, String password) {
@@ -166,9 +168,21 @@ public class StaffServiceImpl implements StaffService {
     public R findPageStaff(Long current, Long size) {
         List<Staff>staff=staffMapper.selectList(null);
         Long Assize=Math.min(staff.size(),size);
-        Long currents=Math.min(current,1);
+        if (current<=(staff.size()/size))
+        {
+        currents=current;
+        }
         Page<Staff>page=staffMapper.selectPage(new Page<>(currents,Assize),Wrappers.<Staff>query(null));
-        return page.getTotal()==0?R.failed("无信息"):R.ok(page,"返回信息");
+        if (size>staff.size())
+        {
+            return R.ok(page,"输入的大小太大，显示所有信息");
+        }
+        if (current>(staff.size()/size))
+        {
+            return R.failed("输入的页码太大，重新输入");
+        }
+        return R.ok(page);
+
     }
 
     @Override
@@ -177,8 +191,19 @@ public class StaffServiceImpl implements StaffService {
         queryWrapper.eq("status",status);
         List<Staff>staff=staffMapper.selectList(queryWrapper);
         Long Assize=Math.min(staff.size(),size);
-        Long currents=Math.min(current,1);
+        if (current<=(staff.size()/size))
+        {
+            currents=current;
+        }
         Page<Staff>page=staffMapper.selectPage(new Page<>(currents,Assize),queryWrapper);
+        if (size>staff.size())
+        {
+            return R.ok(page,"输入的大小太大，显示所有信息");
+        }
+        if (current>(staff.size()/size))
+        {
+            return R.failed("输入的页码太大，重新输入");
+        }
         return page.getTotal()==0?R.failed("无信息"):R.ok(page,"返回信息");
     }
 
@@ -188,8 +213,19 @@ public class StaffServiceImpl implements StaffService {
         queryWrapper.eq("name",name);
         List<Staff>staff=staffMapper.selectList(queryWrapper);
         Long Assize=Math.min(staff.size(),size);
-        Long currents=Math.min(current,1);
+        if (current<=(staff.size()/size))
+        {
+            currents=current;
+        }
         Page<Staff>page=staffMapper.selectPage(new Page<>(currents,Assize),queryWrapper);
+        if (size>staff.size())
+        {
+            return R.ok(page,"输入的大小太大，显示所有信息");
+        }
+        if (current>(staff.size()/size))
+        {
+            return R.failed("输入的页码太大，重新输入");
+        }
         return page.getTotal()==0?R.failed("无信息"):R.ok(page,"返回信息");
     }
 
