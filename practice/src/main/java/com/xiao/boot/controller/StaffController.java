@@ -115,6 +115,10 @@ public class StaffController {
      */
 
     public R<Integer> addStaff(AddStaff staff,Integer salary) {
+        if (staff.equals(staffService.findStaffById(staff.getJobId())))
+        {
+            return R.failed("id不能重复");
+        }
         if (staff.getName()==null)
         {
             return R.failed("姓名不能为空");
@@ -143,7 +147,6 @@ public class StaffController {
         {
             return R.failed("请输入员工的薪资");
         }
-
         Staff staff2=new Staff();
         BeanUtils.copyProperties(staff,staff2);
         Integer row = staffService.addStaff(staff2);
