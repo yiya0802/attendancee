@@ -277,11 +277,13 @@ public class StaffServiceImpl implements StaffService
             return R.failed("员工工号不能为空！");
         }
         // 修改salary
-        if (salaryMapper.selectById(staff1.getJobId()) == null)
+        QueryWrapper<Salary>queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("userid",staff1.getJobId());
+        Salary salary1 = salaryMapper.selectOne(queryWrapper);
+        if (salary1==null)
         {
-            return R.failed("薪资表不存在此员工");
+            return R.failed("此员工不存在");
         }
-        Salary salary1 = salaryMapper.selectById(staff1.getJobId());
         salary1.setBascimoney(salary);
         salary1.setName(staff1.getName());
         salary1.setPost(staff1.getPost());
