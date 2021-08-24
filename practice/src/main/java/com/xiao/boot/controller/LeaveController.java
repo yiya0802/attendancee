@@ -54,8 +54,12 @@ public class LeaveController
         else if (c.getLeavetype()==1)
         {
             Staff staff=staffService.findStaffByName(c.getName());
-            staffService.deleteStaffById(staff.getJobId());
-            return R.ok(leaveService.addResignProcess(c));
+            if (staff!=null)
+            {
+                staffService.deleteStaffById(staff.getJobId());
+            }
+
+            return  staff==null?R.failed("员工不存在"):R.ok(leaveService.addResignProcess(c));
         }
 
        return R.ok(leaveService.addReimburseProcess(c));
