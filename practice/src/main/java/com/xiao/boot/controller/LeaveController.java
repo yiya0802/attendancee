@@ -43,12 +43,15 @@ public class LeaveController
      */
 
     private R circuit(Circuit c) {
+
         if (c.getLeavetype()!=0 && c.getLeavetype()!=1 &&c.getLeavetype()!=2)
         {
             return R.failed("leavetype只能为0，1，2");
         }
         if (c.getLeavetype() == 0) {
-            return R.ok(leaveService.addLeaveProcess(c));
+           return R.ok(leaveService.addLeaveProcess(c));
+   //         return leaveService.addLeaveProcess(c)==0?R.failed("员工审核信息和意见不存在"):R.ok("插入成功");
+
         }
 
         else if (c.getLeavetype()==1)
@@ -57,12 +60,14 @@ public class LeaveController
             if (staff!=null)
             {
                 staffService.deleteStaffById(staff.getJobId());
+
             }
 
             return  staff==null?R.failed("员工不存在"):R.ok(leaveService.addResignProcess(c));
         }
 
-       return R.ok(leaveService.addReimburseProcess(c));
+      return R.ok(leaveService.addReimburseProcess(c));
+   //     return leaveService.addReimburseProcess(c)==0?R.failed("员工审核信息和意见不存在"):R.ok("插入成功");
 
 
     }
@@ -117,6 +122,14 @@ public class LeaveController
 
     @GetMapping("/findpagecircuit")
     @ResponseBody
+    /**
+     *
+     * @description: 分页展示事务表
+     * @param: [current, size]
+     * @return: com.xiao.boot.bean.po.R
+     * @date: 2021/8/24
+     */
+
     private R findPageCircuit(Long current,Long size)
     {
         return leaveService.findPageCircuit(current,size);

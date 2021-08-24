@@ -6,6 +6,7 @@ import java.util.Date;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @since 2021-08-16 09:06:54
  */
 @SuppressWarnings("serial")
+@Data
 @AllArgsConstructor
 public class Leavetable extends Model<Leavetable> {
     //请假号
@@ -35,6 +37,8 @@ public class Leavetable extends Model<Leavetable> {
     private Integer days;
     //金额（报销）
     private Double ammount;
+    private Integer status=0;
+    private  String opinion;
 
 
     public Integer getId() {

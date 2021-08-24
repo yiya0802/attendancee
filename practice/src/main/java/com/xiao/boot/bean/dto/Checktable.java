@@ -3,6 +3,7 @@ package com.xiao.boot.bean.dto;
 import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
  */
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class Checktable implements Serializable {
     private static final long serialVersionUID = 320441511304797276L;
 
@@ -24,7 +26,7 @@ public class Checktable implements Serializable {
 
     private String opinion;
 
-    private String status;
+    private Integer status;
 
 
     public String getName() {
@@ -59,12 +61,6 @@ public class Checktable implements Serializable {
         this.opinion = opinion;
     }
 
-    public String getStatus() {
-        return status;
-    }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
 }

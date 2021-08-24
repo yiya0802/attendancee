@@ -50,25 +50,34 @@ public class LeaveServiceImpl implements LeaveService
     @Override
     public int addLeaveProcess(Circuit c)
     {
-        
+        QueryWrapper<Checktable> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("name",c.getName());
+        Checktable checktable=checkMapper.selectOne(queryWrapper);
+
         Leavetable leave = new Leavetable(0, c.getLeavetype(), null, c.getName(), c.getReason(), c.getLeaveTime(),
-            c.getBackTime(), c.getDays(), 0.0);
+            c.getBackTime(), c.getDays(), 0.0,checktable.getStatus(),checktable.getOpinion());
         return leaveMapper.insert(leave);
     }
     
     @Override
     public int addResignProcess(Circuit c)
     {
+        QueryWrapper<Checktable> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("name",c.getName());
+        Checktable checktable=checkMapper.selectOne(queryWrapper);
         Leavetable leavetable =
-            new Leavetable(0, c.getLeavetype(), null, c.getName(), c.getReason(), null, null, null, null);
+            new Leavetable(0, c.getLeavetype(), null, c.getName(), c.getReason(), null, null, null, null,checktable.getStatus(),checktable.getOpinion());
         return leaveMapper.insert(leavetable);
     }
     
     @Override
     public int addReimburseProcess(Circuit c)
     {
+        QueryWrapper<Checktable> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("name",c.getName());
+        Checktable checktable=checkMapper.selectOne(queryWrapper);
         Leavetable leavetable =
-            new Leavetable(0, c.getLeavetype(), null, c.getName(), c.getReason(), null, null, null, c.getAmmount());
+            new Leavetable(0, c.getLeavetype(), null, c.getName(), c.getReason(), null, null, null, c.getAmmount(),checktable.getStatus(),checktable.getOpinion());
         return leaveMapper.insert(leavetable);
     }
 
