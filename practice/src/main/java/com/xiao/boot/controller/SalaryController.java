@@ -131,6 +131,25 @@ public class SalaryController {
 
     }
 
+    @GetMapping("/findpagesalary")
+    @ResponseBody
+/**
+ *
+ * @description: 返回所有薪资
+ * @param: [current, size]
+ * @return: com.xiao.boot.bean.po.R
+ * @date: 2021/8/24
+ */
+
+    public R findPageSalary(Long current,Long size)
+    {
+        if (current==null || size==null)
+        {
+            return R.failed("current 和 size不能为空");
+        }
+        return salaryService.findPageSalary(current,size);
+    }
+
 
 
 }

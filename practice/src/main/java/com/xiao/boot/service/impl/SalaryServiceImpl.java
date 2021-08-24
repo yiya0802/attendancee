@@ -3,7 +3,9 @@ package com.xiao.boot.service.impl;
 import java.util.Calendar;
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xiao.boot.bean.dto.AddStaff;
+import com.xiao.boot.bean.po.R;
 import com.xiao.boot.bean.po.Staff;
 import com.xiao.boot.mapper.StaffMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ public class SalaryServiceImpl implements SalaryService {
     DepartmentMapper departmentMapper;
     @Autowired
     StaffMapper staffMapper;
+
+    private long currents = 1;
 
     @Override
     public List<Salary> findSalaryByName(String name) {
@@ -79,5 +83,25 @@ public class SalaryServiceImpl implements SalaryService {
         salary2.setPost(staff.getPost());
         salary2.setMonth(calendar.get(Calendar.MONTH));
         return salaryMapper.insert(salary2);
+    }
+
+    @Override
+    public R findPageSalary(Long current, Long size) {
+        List<Salary>list=salaryMapper.selectList(null);
+        Long Assize = Math.min(list.size(), size);
+        if (current <= (list.size() / size)+1)
+        {
+            currents = current;
+        }
+        Page<Salary>page=salaryMapper.selectPage(new Page<>(currents, Assize),null);
+        if (size > list.size())
+        {
+            return R.ok(page, "输入的大小太大，显示所有信息");
+        }
+        if (current > (list.size() / size)+1)
+        {
+            return R.failed("输入的页码太大，重新输入");
+        }
+        return page.getTotal()==0?R.failed("无信息"):R.ok(page,"输出信息");
     }
 }

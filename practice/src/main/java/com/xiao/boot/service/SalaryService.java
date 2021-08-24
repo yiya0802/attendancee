@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.xiao.boot.bean.dto.AddStaff;
 import com.xiao.boot.bean.po.Department;
+import com.xiao.boot.bean.po.R;
 import com.xiao.boot.bean.po.Salary;
 
 public interface SalaryService {
@@ -18,4 +19,6 @@ public interface SalaryService {
     Integer updateSalary(Salary salary);
 
     Integer addStaffSalary(AddStaff staff, Integer salary);
+
+    R findPageSalary(Long current, Long size);
 }

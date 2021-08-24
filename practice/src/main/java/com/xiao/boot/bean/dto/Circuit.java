@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Circuit {
-    private  String name ;
+    private  String name;
     private  Integer leavetype;
     String reason;
     Integer days;

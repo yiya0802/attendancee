@@ -23,7 +23,7 @@ import lombok.AllArgsConstructor;
  * @return :R
  */
 @Controller
-@RequestMapping("leave")
+@RequestMapping("/leave")
 @AllArgsConstructor
 public class LeaveController
 {
@@ -32,7 +32,7 @@ public class LeaveController
     @Autowired
     private StaffService staffService;
     
-    @RequestMapping("/addcircuit")
+    @GetMapping("/addcircuit")
     @ResponseBody
     /**
      *
@@ -44,9 +44,6 @@ public class LeaveController
 
     private R circuit(Circuit c) {
         if (c.getLeavetype() == 0) {
-            if (leaveService.addLeaveProcess(c) == 0) {
-                return R.failed();
-            }
             return R.ok(leaveService.addLeaveProcess(c));
         }
 
@@ -108,5 +105,12 @@ public class LeaveController
             return R.failed("审核不通过");
         }
         return R.ok(num);
+    }
+
+    @GetMapping("/findpagecircuit")
+    @ResponseBody
+    private R findPageCircuit(Long current,Long size)
+    {
+        return leaveService.findPageCircuit(current,size);
     }
 }
