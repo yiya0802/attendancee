@@ -43,6 +43,10 @@ public class LeaveController
      */
 
     private R circuit(Circuit c) {
+        if (c.getLeavetype()!=0 && c.getLeavetype()!=1 &&c.getLeavetype()!=2)
+        {
+            return R.failed("leavetype只能为0，1，2");
+        }
         if (c.getLeavetype() == 0) {
             return R.ok(leaveService.addLeaveProcess(c));
         }

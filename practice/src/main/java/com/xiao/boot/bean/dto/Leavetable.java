@@ -6,6 +6,7 @@ import java.util.Date;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 请假表(Leavetable)表实体类
@@ -26,9 +27,9 @@ public class Leavetable extends Model<Leavetable> {
     private String name;
 
     private String reason;
-
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss")
     private Date leavetime;
-
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss")
     private Date backtime;
 
     private Integer days;

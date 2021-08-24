@@ -60,7 +60,7 @@ public class LeaveServiceImpl implements LeaveService
     public int addResignProcess(Circuit c)
     {
         Leavetable leavetable =
-            new Leavetable(null, c.getLeavetype(), null, c.getName(), c.getReason(), null, null, null, null);
+            new Leavetable(0, c.getLeavetype(), null, c.getName(), c.getReason(), null, null, null, null);
         return leaveMapper.insert(leavetable);
     }
     
@@ -68,7 +68,7 @@ public class LeaveServiceImpl implements LeaveService
     public int addReimburseProcess(Circuit c)
     {
         Leavetable leavetable =
-            new Leavetable(null, c.getLeavetype(), null, c.getName(), c.getReason(), null, null, null, c.getAmmount());
+            new Leavetable(0, c.getLeavetype(), null, c.getName(), c.getReason(), null, null, null, c.getAmmount());
         return leaveMapper.insert(leavetable);
     }
 

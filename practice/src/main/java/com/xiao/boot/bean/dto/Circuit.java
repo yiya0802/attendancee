@@ -5,6 +5,7 @@ import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @anthor :zyy
@@ -20,7 +21,9 @@ public class Circuit {
     private  Integer leavetype;
     String reason;
     Integer days;
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss")
     Date LeaveTime;
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss")
     Date BackTime;
     Double ammount;
 }
