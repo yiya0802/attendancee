@@ -2,9 +2,6 @@ package com.xiao.boot.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xiao.boot.bean.po.R;
-import com.xiao.boot.bean.po.Salary;
-import com.xiao.boot.bean.po.Staff;
-import com.xiao.boot.mapper.StaffMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +15,6 @@ import com.xiao.boot.mapper.LeaveMapper;
 import com.xiao.boot.service.LeaveService;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @anthor :zyy
@@ -105,11 +101,27 @@ public class LeaveServiceImpl implements LeaveService
         return page.getTotal()==0?R.failed("无信息"):R.ok(page,"输出信息");
     }
 
+
     @Override
     public Integer checkProcess(Checktable check)
     {
+        Integer checktable=checkMapper.selectCount(new QueryWrapper<Checktable>().eq("id",check.getId()));
+        if (checktable!=0)
+        {
+            return 2;
+        }
         Checktable check1 = new Checktable();
         BeanUtils.copyProperties(check, check1);
+        QueryWrapper<Leavetable>queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("name",check.getName());
+        Leavetable leavetable=leaveMapper.selectOne(queryWrapper);
+        if (leavetable==null)
+        {
+            return 0;
+        }
+        leavetable.setOpinion(check.getOpinion());
+        leavetable.setStatus(check.getStatus());
+        leaveMapper.updateById(leavetable);
         int num = checkMapper.insert(check1);
         return num;
     }

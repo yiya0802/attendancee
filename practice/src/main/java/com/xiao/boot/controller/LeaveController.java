@@ -16,6 +16,9 @@ import com.xiao.boot.service.StaffService;
 
 import lombok.AllArgsConstructor;
 
+import java.util.HashSet;
+import java.util.List;
+
 /**
  * @anthor :zyy
  * @description: 事务表，请假，离开，离职
@@ -31,7 +34,7 @@ public class LeaveController
     private LeaveService leaveService;
     @Autowired
     private StaffService staffService;
-    
+
     @GetMapping("/addcircuit")
     @ResponseBody
     /**
@@ -108,6 +111,8 @@ public class LeaveController
 
    private R shenhe(Checktable check)
     {
+
+
         if (check.getType()!=0 && check.getType()!=1 &&check.getType()!=2)
         {
             return R.failed("请输入正确的类型");
@@ -115,7 +120,11 @@ public class LeaveController
         Integer num=leaveService.checkProcess(check);
         if (num==0)
         {
-            return R.failed("审核不通过");
+            return R.failed("在事务表找不到此员工");
+        }
+        if (num==2)
+        {
+            return R.failed("id 存在了，重写个id");
         }
         return R.ok(num);
     }

@@ -5,6 +5,8 @@ import com.xiao.boot.bean.dto.Circuit;
 import com.xiao.boot.bean.dto.Leavetable;
 import com.xiao.boot.bean.po.R;
 
+import java.util.List;
+
 public interface LeaveService {
     Leavetable getMyLeaveService(String name);
 
@@ -17,4 +19,5 @@ public interface LeaveService {
     int addReimburseProcess(Circuit c);
 
     R findPageCircuit(Long current, Long size);
+
 }
