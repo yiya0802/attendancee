@@ -104,4 +104,12 @@ public class SalaryServiceImpl implements SalaryService {
         }
         return page.getTotal()==0?R.failed("无信息"):R.ok(page,"输出信息");
     }
+
+    @Override
+    public Salary findSalByName(String name) {
+        QueryWrapper<Salary>query=new QueryWrapper<>();
+        query.eq("Name",name);
+        Salary salary=salaryMapper.selectOne(query);
+        return salary;
+    }
 }

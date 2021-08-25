@@ -149,6 +149,19 @@ public class SalaryController {
         }
         return salaryService.findPageSalary(current,size);
     }
+    @GetMapping("/addbonus")
+    @ResponseBody
+    public R AddBonus(String name,Integer bonus)
+    {
+      Salary salary= salaryService.findSalByName(name);
+      if (salary==null)
+      {
+          return R.failed("不存在此员工");
+      }
+      salary.setBonus(bonus);
+      return salaryService.updateSalary(salary)==0?R.failed("添加失败"):R.ok("添加成功");
+
+    }
 
 
 

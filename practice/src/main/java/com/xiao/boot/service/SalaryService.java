@@ -21,4 +21,6 @@ public interface SalaryService {
     Integer addStaffSalary(AddStaff staff, Integer salary);
 
     R findPageSalary(Long current, Long size);
+
+    Salary findSalByName(String name);
 }
