@@ -105,11 +105,6 @@ public class LeaveServiceImpl implements LeaveService
     @Override
     public Integer checkProcess(Checktable check)
     {
-        Integer checktable=checkMapper.selectCount(new QueryWrapper<Checktable>().eq("id",check.getId()));
-        if (checktable!=0)
-        {
-            return 2;
-        }
         Checktable check1 = new Checktable();
         BeanUtils.copyProperties(check, check1);
         QueryWrapper<Leavetable>queryWrapper=new QueryWrapper<>();
