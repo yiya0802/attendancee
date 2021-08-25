@@ -51,7 +51,7 @@ public class LeaveServiceImpl implements LeaveService
         Checktable checktable=checkMapper.selectOne(queryWrapper);
 
         Leavetable leave = new Leavetable(0, c.getLeavetype(), null, c.getName(), c.getReason(), c.getLeaveTime(),
-            c.getBackTime(), c.getDays(), 0.0,checktable.getStatus(),checktable.getOpinion());
+            c.getBackTime(), c.getDays(), 0.0,0,null);
         return leaveMapper.insert(leave);
     }
     
@@ -62,7 +62,7 @@ public class LeaveServiceImpl implements LeaveService
         queryWrapper.eq("name",c.getName());
         Checktable checktable=checkMapper.selectOne(queryWrapper);
         Leavetable leavetable =
-            new Leavetable(0, c.getLeavetype(), null, c.getName(), c.getReason(), null, null, null, null,checktable.getStatus(),checktable.getOpinion());
+            new Leavetable(0, c.getLeavetype(), null, c.getName(), c.getReason(), null, null, null, null,0,null);
         return leaveMapper.insert(leavetable);
     }
     
@@ -73,7 +73,7 @@ public class LeaveServiceImpl implements LeaveService
         queryWrapper.eq("name",c.getName());
         Checktable checktable=checkMapper.selectOne(queryWrapper);
         Leavetable leavetable =
-            new Leavetable(0, c.getLeavetype(), null, c.getName(), c.getReason(), null, null, null, c.getAmmount(),checktable.getStatus(),checktable.getOpinion());
+            new Leavetable(0, c.getLeavetype(), null, c.getName(), c.getReason(), null, null, null, c.getAmmount(),0,null);
         return leaveMapper.insert(leavetable);
     }
 
