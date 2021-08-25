@@ -14,7 +14,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UpdateStaff {
-    Integer job_id;
+    Integer id;
+    String address;
     String name;
     String mobile;
     String password;

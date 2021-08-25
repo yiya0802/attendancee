@@ -81,7 +81,7 @@ public class StaffServiceImpl implements StaffService
             return 0;
         }
         Staff staff2=new Staff(staff.getJobId(),staff.getName(),staff.getSex(),null,
-                staff.getMobile(),staff.getPost(),staff.getRole(),staff.getPassword(),null,staff.getStatus());
+                staff.getMobile(),staff.getPost(),staff.getRole(),staff.getPassword(),null,null,staff.getStatus());
         return staffMapper.insertAddStaff(staff2);
     }
     
@@ -298,5 +298,10 @@ public class StaffServiceImpl implements StaffService
         
         return R.ok("修改成功");
     }
-    
+
+    @Override
+    public Integer updateStaff2(Staff staff) {
+        return  staffMapper.updateById(staff);
+    }
+
 }

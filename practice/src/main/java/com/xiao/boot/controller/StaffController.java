@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpSession;
 
 import com.baomidou.mybatisplus.core.toolkit.Assert;
+import com.xiao.boot.bean.dto.UpdateStaff;
 import com.xiao.boot.service.SalaryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -180,7 +181,6 @@ public class StaffController {
 
     public R editStaff(Staff staff) {
         HashSet<Integer>hashSet=new HashSet<>();
-
         hashSet.addAll( staffService.findAllStaffID());
         if (!hashSet.contains(staff.getJobId()))
         {
@@ -210,11 +210,21 @@ public class StaffController {
      * @date: 2021/8/16
      */
 
-    public R<Integer> updateStaff(Staff staff) {
-        Integer row = staffService.updateStaff(staff);
-        if (row == 0)
-        {return R.failed("update failed");}
-        return R.ok(row);
+    public R updateStaff(UpdateStaff updateStaff) {
+        if (StringUtils.isEmpty(String.valueOf(updateStaff.getId())))
+        {
+            return R.ok("id 不能为空");
+        }
+        Staff staff=staffService.findStaffById(updateStaff.getId());
+        if (staff==null)
+        {
+            return R.failed("不存在此员工");
+        }
+        staff.setName(updateStaff.getName());
+        staff.setMobile(updateStaff.getMobile());
+        staff.setAddress(updateStaff.getAddress());
+        staff.setPassword(updateStaff.getPassword());
+        return staffService.updateStaff2(staff)==0?R.failed("更新失败"):R.ok("更新成功");
     }
 
     // 删除员工
@@ -243,32 +253,6 @@ public class StaffController {
         }
         return R.ok(allStaff);
     }
-
-    // 修改角色
-    @GetMapping("/update_staff_role")
-    /**
-     *
-     * @description: 修改员工信息
-     * @param: [jobId, role]
-     * @return: java.lang.String
-     * @date: 2021/8/16
-     */
-
-    public String update_staff_role(@RequestParam("jobId") String jobId,
-                                    @RequestParam("role") String role) {
-        Staff staff = staffService.findStaffById(Integer.parseInt(jobId));
-        Integer roleId = Integer.parseInt(role.split("/?")[0]);
-        if (roleId == 2) {
-            Staff manager = staffService.findManagerByDep(staff.getDepartmentId());
-            if (manager != null) {
-                return "redirect:/role_manage_page";
-            }
-        }
-        staff.setRole(roleId);
-        return "redirect:/role_manage_page";
-    }
-
-
 
     // 查看个人信息
     @GetMapping("/update_selfInfo_page")
@@ -446,5 +430,7 @@ public class StaffController {
         staff.setStatus(status);
         return staffService.updateStaffStatus(staff)==0?R.failed("更新状态失败"):R.ok(staffService.updateStaffStatus(staff),"更新状态成功");
     }
+
+
 
 }

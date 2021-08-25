@@ -56,4 +56,6 @@ public interface StaffService {
     Integer updateStaffStatus(Staff staff);
 
     R editStaff(Staff staff1, Integer salary);
+
+    Integer updateStaff2(Staff staff);
 }
