@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.thymeleaf.util.StringUtils;
 
 import com.xiao.boot.bean.dto.Checktable;
@@ -112,11 +113,6 @@ public class LeaveController
    private R shenhe(Checktable check)
     {
 
-
-        if (check.getType()!=0 && check.getType()!=1 &&check.getType()!=2)
-        {
-            return R.failed("请输入正确的类型");
-        }
         Integer num=leaveService.checkProcess(check);
         if (num==0)
         {
