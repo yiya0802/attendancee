@@ -4,7 +4,7 @@
     <insert id="insertAddStaff">
         insert into practice2.staff
         values (#{staff2.jobId},#{staff2.name},null,#{staff2.sex},#{staff2.mobile},#{staff2.post},
-                #{staff2.password},#{staff2.role},null,#{staff2.status})
+                #{staff2.password},#{staff2.role},null,null,#{staff2.status})
     </insert>
 
 </mapper>
