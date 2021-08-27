@@ -260,7 +260,7 @@ public class StaffController {
      * @date: 2021/8/16
      */
 
-    public R update_selfInfo_page(@RequestParam("id") Integer jobId) {
+    public R update_selfInfo_page(Integer jobId) {
         Staff staff = staffService.findStaffById(jobId);
         UpdateStaff updateStaff=new UpdateStaff(staff.getJobId(),staff.getAddress(),staff.getName(),staff.getMobile(),staff.getPassword());
         if (staff == null) return R.failed();

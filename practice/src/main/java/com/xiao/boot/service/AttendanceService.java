@@ -54,4 +54,6 @@ public interface AttendanceService {
     Integer findDakaRecordById(Integer jobId, Date nowDate);
 
     Integer updateAttendance(Attendance updateAttendance);
+
+    List<Attendance> findDakaRecordByIdAndDate(Integer jobId, Date nowDate);
 }

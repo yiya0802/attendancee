@@ -114,4 +114,11 @@ public class AttendanceServiceImpl implements AttendanceService
 
         return attendanceMapper.updateById(updateAttendance);
     }
+
+    @Override
+    public List<Attendance> findDakaRecordByIdAndDate(Integer jobId, Date nowDate) {
+        QueryWrapper<Attendance>queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("job_id",jobId).eq("attendance_date",nowDate);
+        return attendanceMapper.selectList(queryWrapper);
+    }
 }

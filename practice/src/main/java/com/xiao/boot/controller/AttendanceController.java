@@ -21,7 +21,7 @@ import com.xiao.boot.service.DepartmentService;
 import com.xiao.boot.service.StaffService;
 
 @Controller
-@RequestMapping("attendance")
+@RequestMapping("/attendance")
 public class AttendanceController {
     @Autowired
     AttendanceService attendanceService;
@@ -53,7 +53,7 @@ public class AttendanceController {
      * @date: 2021/8/26
      */
 
-    public R start(@RequestParam("jobId") Integer jobId, @RequestParam("type") Integer t,Date nowTime){
+    public R start(@RequestParam("jobId") Integer jobId, @RequestParam("type") Integer t,@RequestParam("nowTime") String nowtime){
         Staff staff = staffService.findStaffById(jobId);
         if (staff==null)
         {
@@ -65,16 +65,18 @@ public class AttendanceController {
             SimpleDateFormat sf=new SimpleDateFormat("HH:mm");
             SimpleDateFormat snf=new SimpleDateFormat("yyyy-MM-dd");
             Date nowDate=null;
-           // Date nowTime=null;
+            Date nowTime=null;
             Date BeginTime=null;
             Date EndTime=null;
             Date DinnerTime=null;
+            Date date=new Date();
             try {
-     //           nowTime=sf.parse(sf.format(nowTime));
+     //         nowTime=sf.parse(sf.format(nowTime));
+                nowTime=sf.parse(nowtime);
                 BeginTime=sf.parse("08:00");
                 EndTime=sf.parse("08:30");
                 DinnerTime=sf.parse("12:00");
-                nowDate=snf.parse(snf.format(new Date()));
+                nowDate=snf.parse(snf.format(date));
 
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -93,9 +95,8 @@ public class AttendanceController {
                 {
                     return R.failed("您已经打过卡了！");
                 }
-                Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String time = sdf.format(date);
+                String time=sdf.format(date);
                 Attendance attendance=new Attendance();
                 attendance.setJobId(jobId);
                 attendance.setAttendanceTime(time);
@@ -118,7 +119,6 @@ public class AttendanceController {
                 {
                     return R.failed("您已经打过卡了!");
                 }
-                Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String time = sdf.format(date);
                 Attendance attendance=new Attendance();
@@ -144,13 +144,13 @@ public class AttendanceController {
        if (t==1)
        {
            SimpleDateFormat sf=new SimpleDateFormat("HH:mm");
-   //        Date nowTime=null;
+           Date nowTime=null;
            Date BeginTime=null;
            SimpleDateFormat snf=new SimpleDateFormat("yyyy-MM-dd");
            Date nowDate=null;
            Date DinnerTime=null;
            try {
-               nowTime=sf.parse(sf.format(new Date()));
+               nowTime=sf.parse(nowtime);
                BeginTime=sf.parse("18:00");
                nowDate=snf.parse(snf.format(new Date()));
                DinnerTime= sf.parse("12:00");
@@ -200,18 +200,19 @@ public class AttendanceController {
                    Date date = new Date();
                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                    String time = sdf.format(date);
-                   List<Attendance> attendance=attendanceService.findDakaRecord(jobId);
+                   List<Attendance> attendance=attendanceService.findDakaRecordByIdAndDate(jobId,nowDate);
                    Attendance updateAttendance=attendance.get(1);
                    updateAttendance.setAttendanceTime(time);
                    updateAttendance.setAttendanceType(1);
                    attendanceService.updateAttendance(updateAttendance);
                    //如果打卡时间是在早退时间内，把钱还给他
-                   if (updateAttendance.getAttendanceDate().after(DinnerTime) &&updateAttendance.getAttendanceDate().before(BeginTime))
-                   {
-                       Salary salary=salaryService.findSalaryById(staff.getJobId());
-                       salary.setEarlyLeave(salary.getEarlyLeave()-100);
-                       salaryService.updateSalary(salary);
-                   }
+//                   if (updateAttendance.getAttendanceDate().after(DinnerTime) &&updateAttendance.getAttendanceDate().before(BeginTime))
+//                   {
+//                       Salary salary=salaryService.findSalaryById(staff.getJobId());
+//                       salary.setEarlyLeave(salary.getEarlyLeave()-100);
+//                       salaryService.updateSalary(salary);
+//                   }
+                   return R.ok("更新了打卡时间");
                }
                Date date = new Date();
                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -225,6 +226,7 @@ public class AttendanceController {
                attendance.setAttendanceStatus(1);
                attendance.setDepartmentId(staff.getDepartmentId());
                attendance.setName(staff.getName());
+               return R.ok(attendanceService.daKa(attendance));
            }
 
        }
