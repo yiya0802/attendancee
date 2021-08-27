@@ -206,12 +206,13 @@ public class AttendanceController {
                    updateAttendance.setAttendanceType(1);
                    attendanceService.updateAttendance(updateAttendance);
                    //如果打卡时间是在早退时间内，把钱还给他
-//                   if (updateAttendance.getAttendanceDate().after(DinnerTime) &&updateAttendance.getAttendanceDate().before(BeginTime))
-//                   {
-//                       Salary salary=salaryService.findSalaryById(staff.getJobId());
-//                       salary.setEarlyLeave(salary.getEarlyLeave()-100);
-//                       salaryService.updateSalary(salary);
-//                   }
+                   if (updateAttendance.getAttendanceDate().after(DinnerTime) &&updateAttendance.getAttendanceDate().before(BeginTime))
+                   {
+                       Salary salary=salaryService.findSalaryById(staff.getJobId());
+                       Integer early=salary.getEarlyLeave();
+                       salary.setEarlyLeave(early-100);
+                       salaryService.updateSalary(salary);
+                   }
                    return R.ok("更新了打卡时间");
                }
                Date date = new Date();

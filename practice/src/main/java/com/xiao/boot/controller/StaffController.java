@@ -206,11 +206,11 @@ public class StaffController {
      */
 
     public R updateStaff(UpdateStaff updateStaff) {
-        if (StringUtils.isEmpty(String.valueOf(updateStaff.getId())))
+        if (StringUtils.isEmpty(String.valueOf(updateStaff.getJobId())))
         {
             return R.ok("id 不能为空");
         }
-        Staff staff=staffService.findStaffById(updateStaff.getId());
+        Staff staff=staffService.findStaffById(updateStaff.getJobId());
         if (staff==null)
         {
             return R.failed("不存在此员工");

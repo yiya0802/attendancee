@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class UpdateStaff {
-    Integer id;
+    Integer jobId;
     String address;
     String name;
     String mobile;
