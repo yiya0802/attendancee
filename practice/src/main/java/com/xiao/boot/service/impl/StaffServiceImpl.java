@@ -305,4 +305,13 @@ public class StaffServiceImpl implements StaffService
         return  staffMapper.updateById(staff);
     }
 
+    @Override
+    public Integer resetCode(String name, String password) {
+        QueryWrapper<Staff>queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("name",name);
+        Staff staff=staffMapper.selectOne(queryWrapper);
+        staff.setPassword("123456");
+        return staffMapper.updateById(staff);
+    }
+
 }

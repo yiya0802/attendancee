@@ -58,7 +58,9 @@ public class SalaryServiceImpl implements SalaryService {
 
     @Override
     public Salary findSalaryById(Integer jobId) {
-        return salaryMapper.selectById(jobId);
+        QueryWrapper<Salary>queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("userid",jobId);
+        return salaryMapper.selectOne(queryWrapper);
     }
 
     @Override

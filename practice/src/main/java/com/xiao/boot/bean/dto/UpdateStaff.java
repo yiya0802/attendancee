@@ -1,5 +1,6 @@
 package com.xiao.boot.bean.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
+@AllArgsConstructor
 public class UpdateStaff {
     Integer id;
     String address;

@@ -1,6 +1,7 @@
 package com.xiao.boot.bean.po;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -18,8 +19,8 @@ public class Attendance implements Serializable {
     private String attendanceTime;
     private Integer jobId;
     private String name;
-    private String sex;
-    private String birthday;
+    private Integer attendanceStatus;
     private String departmentId;
     private Integer attendanceType;
+    private Date attendanceDate;
 }

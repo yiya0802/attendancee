@@ -1,9 +1,9 @@
 package com.xiao.boot.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -92,5 +92,26 @@ public class AttendanceServiceImpl implements AttendanceService
         QueryWrapper<Attendance> querywrapper = new QueryWrapper<>();
         querywrapper.eq("attendance_type", type);
         return attendanceMapper.selectList(querywrapper);
+    }
+
+    @Override
+    /**
+     *
+     * @description: 通过id找到今天的早上的打卡记录
+     * @param: [jobId]
+     * @return: com.xiao.boot.bean.po.Attendance
+     * @date: 2021/8/26
+     */
+
+    public Integer findDakaRecordById(Integer jobId, Date nowDate) {
+        QueryWrapper<Attendance>queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("job_id",jobId).eq("attendance_date",nowDate);
+        return attendanceMapper.selectCount(queryWrapper);
+    }
+
+    @Override
+    public Integer updateAttendance(Attendance updateAttendance) {
+
+        return attendanceMapper.updateById(updateAttendance);
     }
 }

@@ -95,15 +95,10 @@ public class StaffController {
      * @date: 2021/8/16
      */
 
-    public R<Integer> resetCode(@RequestParam("jobId") String jobId) {
-        return R.ok(staffService.resetCode(Integer.parseInt(jobId)), "更改成功");
+    public R resetCode(String name,String password) {
+        return R.ok(staffService.resetCode(name,password), "更改成功");
     }
 
-    //返回添加员工页面
-    @GetMapping("/add_staff_page")
-    public String addStaffPage() {
-        return "staff/addStaff";
-    }
 
     // 添加员工
     @GetMapping("/add_staff")
@@ -265,10 +260,11 @@ public class StaffController {
      * @date: 2021/8/16
      */
 
-    public R<Staff> update_selfInfo_page(@RequestParam("id") Integer jobId) {
+    public R update_selfInfo_page(@RequestParam("id") Integer jobId) {
         Staff staff = staffService.findStaffById(jobId);
+        UpdateStaff updateStaff=new UpdateStaff(staff.getJobId(),staff.getAddress(),staff.getName(),staff.getMobile(),staff.getPassword());
         if (staff == null) return R.failed();
-        return R.ok(staff);
+        return R.ok(updateStaff);
     }
 
 

@@ -58,4 +58,6 @@ public interface StaffService {
     R editStaff(Staff staff1, Integer salary);
 
     Integer updateStaff2(Staff staff);
+
+    Integer resetCode(String name, String password);
 }

@@ -1,5 +1,6 @@
 package com.xiao.boot.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.xiao.boot.bean.po.Attendance;
@@ -49,4 +50,8 @@ public interface AttendanceService {
   */
 
     List<Attendance> findDakaRecordByType(Integer type);
+
+    Integer findDakaRecordById(Integer jobId, Date nowDate);
+
+    Integer updateAttendance(Attendance updateAttendance);
 }
