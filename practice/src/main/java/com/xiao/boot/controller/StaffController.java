@@ -239,22 +239,13 @@ public class StaffController {
         return R.ok(row, "删除成功");
     }
 
-    // 角色管理页面
-    @GetMapping("/role_manage_page")
-    public R<List<Staff>> role_manage_page() {
-        List<Staff> allStaff = staffService.findAllStaff();
-        if (allStaff.size() == 0) {
-            return R.failed();
-        }
-        return R.ok(allStaff);
-    }
 
     // 查看个人信息
     @GetMapping("/update_selfInfo_page")
     @ResponseBody
     /**
      *
-     * @description: 修改个人信息
+     * @description: 修改个人信息界面
      * @param: [jobId]
      * @return: com.xiao.boot.bean.po.R<com.xiao.boot.bean.po.Staff>
      * @date: 2021/8/16
@@ -268,36 +259,6 @@ public class StaffController {
     }
 
 
-    @ResponseBody
-    @GetMapping("/check_code")
-    /**
-     *
-     * @description: 根据jobId 和 password来查找员工
-     * @param: [jobId]
-     * @return: com.xiao.boot.bean.po.R<com.xiao.boot.bean.po.Staff>
-     * @date: 2021/8/16
-     */
-
-    public R<Staff> findStaffByLoginElement(Integer jobId) {
-        return R.ok(staffService.findStaffById(jobId));
-    }
-
-    @PostMapping("/update_code")
-    public String updateCode(@RequestParam("newPassword") String newPassword,
-                             HttpSession session,
-                             Model model) {
-        Integer jobId = ((Staff) session.getAttribute("staff")).getJobId();
-        Staff staff = new Staff();
-
-        model.addAttribute("msg", "修改成功");
-        return "redirect:/welcome";
-    }
-
-    // 考勤页面
-    @GetMapping("/kaoqing")
-    public String kaoQing() {
-        return "attendance/kaoqing";
-    }
 
     /**
      * @description: 通过部门号来查询员工

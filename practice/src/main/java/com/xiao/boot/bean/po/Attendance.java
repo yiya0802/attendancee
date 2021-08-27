@@ -18,9 +18,9 @@ public class Attendance implements Serializable {
     private Integer id;
     private String attendanceTime;
     private Integer jobId;
-    private String name;
+
     private Integer attendanceStatus;
-    private String departmentId;
+
     private Integer attendanceType;
     private Date attendanceDate;
 }

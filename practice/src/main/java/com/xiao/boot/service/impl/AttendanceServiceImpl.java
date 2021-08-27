@@ -3,6 +3,11 @@ package com.xiao.boot.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xiao.boot.bean.dto.Leavetable;
+import com.xiao.boot.bean.dto.PageStaff;
+import com.xiao.boot.bean.po.R;
+import com.xiao.boot.bean.po.Staff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +21,8 @@ public class AttendanceServiceImpl implements AttendanceService
 {
     @Autowired
     AttendanceMapper attendanceMapper;
-    
+    private long currents=1;
+
     @Override
     /**
      *
@@ -120,5 +126,73 @@ public class AttendanceServiceImpl implements AttendanceService
         QueryWrapper<Attendance>queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("job_id",jobId).eq("attendance_date",nowDate);
         return attendanceMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public R findPageDakaRecords(Long current, Long size) {
+        if (current==null || size==null)
+        {
+            return R.failed("current 和 size不能为空");
+        }
+        List<Attendance> list=attendanceMapper.selectList(null);
+        Long Assize = Math.min(list.size(), size);
+        if (current <= (list.size() / size)+1)
+        {
+            currents = current;
+        }
+        Page<Attendance> page=attendanceMapper.selectPage(new Page<>(currents, Assize),null);
+        if (size > list.size())
+        {
+            return R.ok(page, "输入的大小太大，显示所有信息");
+        }
+        if (current > (list.size() / size)+1)
+        {
+            return R.failed("输入的页码太大，重新输入");
+        }
+        return page.getTotal()==0?R.failed("无信息"):R.ok(page,"输出信息");
+    }
+
+    @Override
+    public R findPageDakaRecordsByType(Long current, Long size, Integer attendanceType) {
+        QueryWrapper<Attendance> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("attendance_type", attendanceType);
+        List<Attendance> list = attendanceMapper.selectList(queryWrapper);
+        Long Assize = Math.min(list.size(), size);
+        if (current <= (list.size() / size)+1)
+        {
+            currents = current;
+        }
+        Page<Attendance> page = attendanceMapper.selectPage(new Page<>(Assize,currents),queryWrapper);
+        if (size > list.size())
+        {
+            return R.ok(page, "输入的大小太大，显示所有信息");
+        }
+        if (current > (list.size() / size)+1)
+        {
+            return R.failed("输入的页码太大，重新输入");
+        }
+        return page.getTotal() == 0 ? R.failed("无信息") : R.ok(page, "返回信息");
+    }
+
+    @Override
+    public R findPageDakaRecordsById(Long current, Long size, Integer jobId) {
+        QueryWrapper<Attendance> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("job_id", jobId);
+        List<Attendance> list = attendanceMapper.selectList(queryWrapper);
+        Long Assize = Math.min(list.size(), size);
+        if (current <= (list.size() / size)+1)
+        {
+            currents = current;
+        }
+        Page<Attendance> page = attendanceMapper.selectPage(new Page<>(Assize,currents),queryWrapper);
+        if (size > list.size())
+        {
+            return R.ok(page, "输入的大小太大，显示所有信息");
+        }
+        if (current > (list.size() / size)+1)
+        {
+            return R.failed("输入的页码太大，重新输入");
+        }
+        return page.getTotal() == 0 ? R.failed("无信息") : R.ok(page, "返回信息");
     }
 }

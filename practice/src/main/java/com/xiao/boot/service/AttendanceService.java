@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.xiao.boot.bean.po.Attendance;
+import com.xiao.boot.bean.po.R;
 
 public interface AttendanceService {
     /**
@@ -56,4 +57,10 @@ public interface AttendanceService {
     Integer updateAttendance(Attendance updateAttendance);
 
     List<Attendance> findDakaRecordByIdAndDate(Integer jobId, Date nowDate);
+
+    R findPageDakaRecords(Long current, Long size);
+
+    R findPageDakaRecordsByType(Long current, Long size, Integer attendanceType);
+
+    R findPageDakaRecordsById(Long current, Long size, Integer jobId);
 }

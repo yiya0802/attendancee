@@ -5,8 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.xiao.boot.bean.po.Salary;
+import com.xiao.boot.bean.utils.SalaryUtils;
 import com.xiao.boot.service.SalaryService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,9 +102,9 @@ public class AttendanceController {
                 attendance.setAttendanceTime(time);
                 attendance.setAttendanceType(1);
                 attendance.setAttendanceDate(nowDate);
-                attendance.setName(staff.getName());
-                attendance.setDepartmentId(staff.getDepartmentId());
-                attendance.setName(staff.getName());
+//                attendance.setName(staff.getName());
+//                attendance.setDepartmentId(staff.getDepartmentId());
+//                attendance.setName(staff.getName());
                 attendance.setAttendanceStatus(1);
                 int num=attendanceService.daKa(attendance);
                 if (num==0)
@@ -113,25 +113,23 @@ public class AttendanceController {
                     return R.ok(attendance,"打卡成功");
             }
             //迟到
-            if (nowTime.after(EndTime)&&nowTime.before(DinnerTime))
-            {
-                if (attendanceService.findDakaRecordById(jobId,nowDate)>=1)
-                {
+            if (nowTime.after(EndTime)&&nowTime.before(DinnerTime)) {
+                if (attendanceService.findDakaRecordById(jobId, nowDate) >= 1) {
                     return R.failed("您已经打过卡了!");
                 }
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String time = sdf.format(date);
-                Attendance attendance=new Attendance();
+                Attendance attendance = new Attendance();
                 attendance.setJobId(jobId);
                 attendance.setAttendanceTime(time);
                 attendance.setAttendanceType(0);
-                attendance.setName(staff.getName());
+//                attendance.setName(staff.getName());
                 attendance.setAttendanceStatus(1);
                 attendance.setAttendanceDate(nowDate);
-                attendance.setDepartmentId(staff.getDepartmentId());
-                attendance.setName(staff.getName());
-                Salary salary=salaryService.findSalaryById(staff.getJobId());
-                salary.setLateMoney(salary.getLateMoney()+50);
+//                attendance.setDepartmentId(staff.getDepartmentId());
+//                attendance.setName(staff.getName());
+                Salary salary = salaryService.findSalaryById(staff.getJobId());
+                salary.setLateMoney(salary.getLateMoney() + 50);
                 int num=salaryService.updateSalary(salary);
                 if (num==0)
                 {
@@ -176,11 +174,11 @@ public class AttendanceController {
                attendance.setJobId(jobId);
                attendance.setAttendanceTime(time);
                attendance.setAttendanceType(2);
-               attendance.setName(staff.getName());
+//               attendance.setName(staff.getName());
                attendance.setAttendanceDate(nowDate);
                attendance.setAttendanceStatus(1);
-               attendance.setDepartmentId(staff.getDepartmentId());
-               attendance.setName(staff.getName());
+//               attendance.setDepartmentId(staff.getDepartmentId());
+//               attendance.setName(staff.getName());
                Salary salary=salaryService.findSalaryById(staff.getJobId());
                salary.setEarlyLeave(salary.getEarlyLeave()+100);
                int num=salaryService.updateSalary(salary);
@@ -222,11 +220,11 @@ public class AttendanceController {
                attendance.setJobId(jobId);
                attendance.setAttendanceTime(time);
                attendance.setAttendanceType(1);
-               attendance.setName(staff.getName());
+//               attendance.setName(staff.getName());
                attendance.setAttendanceDate(nowDate);
                attendance.setAttendanceStatus(1);
-               attendance.setDepartmentId(staff.getDepartmentId());
-               attendance.setName(staff.getName());
+//               attendance.setDepartmentId(staff.getDepartmentId());
+//               attendance.setName(staff.getName());
                return R.ok(attendanceService.daKa(attendance));
            }
 
@@ -319,5 +317,45 @@ public class AttendanceController {
         }
         return R.ok(records);
     }
+    @GetMapping("/findpagerecords")
+    @ResponseBody
+    /**
+     *
+     * @description: 分页展示打卡记录
+     * @param: [current, size]
+     * @return: com.xiao.boot.bean.po.R
+     * @date: 2021/8/27
+     */
 
+    public R findPageRecords(Long current,Long size,Integer jobId,Integer attendanceType)
+    {
+        if (current==null || size==null)
+        {
+            return R.failed("current 和 size不能为空");
+        }
+        if (jobId==null&&attendanceType==null)
+        {
+            return attendanceService.findPageDakaRecords(current,size);
+        }
+        if (jobId==null)
+        {
+            if (attendanceType!=0 && attendanceType!=1 &&attendanceType!=2)
+            {
+                return R.failed("type只能为0，1，2");
+            }
+            return  attendanceService.findPageDakaRecordsByType(current,size,attendanceType);
+        }
+        if (attendanceType==null)
+        {
+            if (attendanceService.findDakaRecord(jobId)==null)
+            {
+                return R.failed("不存在此员工");
+            }
+
+            return  attendanceService.findPageDakaRecordsById(current,size,jobId);
+        }
+
+        return R.failed("不能同时查询id和type");
+
+    }
 }
