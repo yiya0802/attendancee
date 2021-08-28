@@ -229,7 +229,7 @@ public class AttendanceController {
            }
 
        }
-        return R.failed("请输入正确的type值（0或者1）");
+        return R.failed("请在上班时间打上班卡，下班时间打下班卡！");
 
 
 

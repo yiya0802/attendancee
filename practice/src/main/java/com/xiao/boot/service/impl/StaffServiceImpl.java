@@ -1,6 +1,8 @@
 package com.xiao.boot.service.impl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import com.xiao.boot.bean.dto.AddStaff;
@@ -39,6 +41,14 @@ public class StaffServiceImpl implements StaffService
     
     // 登录
     @Override
+    /**
+     *
+     * @description: 如果jobId为空或者密码为空的话，直接return null
+     * @param: [jobId, password]
+     * @return: com.xiao.boot.bean.po.Staff
+     * @date: 2021/8/28
+     */
+
     public Staff login(Integer jobId, String password)
     {
         if (StringUtils.isEmpty(password) || null == jobId)
@@ -66,8 +76,17 @@ public class StaffServiceImpl implements StaffService
     }
     
     @Override
+    /**
+     *
+     * @description: 根据jobId来重置密码
+     * @param: [jobId]
+     * @return: java.lang.Integer
+     * @date: 2021/8/28 
+     */
+    
     public Integer resetCode(Integer jobId)
     {
+       
         QueryWrapper<Staff>queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("job_id",jobId);
         Staff staff=staffMapper.selectOne(queryWrapper);
@@ -80,6 +99,14 @@ public class StaffServiceImpl implements StaffService
     }
     
     @Override
+    /**
+     *
+     * @description: 添加员工
+     * @param: [staff]
+     * @return: java.lang.Integer
+     * @date: 2021/8/28 
+     */
+    
     public Integer addStaff(AddStaff staff)
     {
         Staff staff1=staffMapper.selectById(staff.getJobId());
@@ -90,6 +117,7 @@ public class StaffServiceImpl implements StaffService
                 staff.getMobile(),staff.getPost(),staff.getRole(),staff.getPassword(),
                 null,null,staff.getStatus());
         return staffMapper.insertAddStaff(staff2);
+
     }
     
     @Override
