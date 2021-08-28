@@ -20,11 +20,9 @@ public class Checktable implements Serializable {
 
     private String name;
 
-
     private String opinion;
 
     private Integer status;
-
 
     public String getName() {
         return name;
