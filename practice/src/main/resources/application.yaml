@@ -13,6 +13,9 @@ spring:
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
+logging:
+  level:
+    com.xiao.boot.mapper: debug
 
 server:
   port: 1400

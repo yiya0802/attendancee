@@ -16,7 +16,7 @@ public interface StaffService {
     Staff findStaffById(Integer jobId);
 
     // 密码重置
-    public Integer resetCode(Integer id);
+    public Integer resetCode(Integer jobId);
 
     // 添加员工
     public Integer addStaff(AddStaff staff);
@@ -59,5 +59,4 @@ public interface StaffService {
 
     Integer updateStaff2(Staff staff);
 
-    Integer resetCode(String name, String password);
 }

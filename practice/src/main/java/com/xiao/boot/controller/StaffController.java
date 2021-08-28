@@ -95,8 +95,8 @@ public class StaffController {
      * @date: 2021/8/16
      */
 
-    public R resetCode(String name,String password) {
-        return R.ok(staffService.resetCode(name,password), "更改成功");
+    public R resetCode(Integer jobId) {
+        return staffService.resetCode(jobId)==0?R.failed("不存在此员工"):R.ok("更改成功");
     }
 
 
